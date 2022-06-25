@@ -162,6 +162,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 FrmLogin login = new FrmLogin();
                 createFile();
                 writeFile();
+                JOptionPane.showMessageDialog(null, "Se guardo un archivo con\n los datos de la conexón", "Archivo guardado", JOptionPane.INFORMATION_MESSAGE);
                 login.setVisible(true);
                 this.dispose();
             }else{
@@ -201,7 +202,8 @@ public class FrmConfigConection extends javax.swing.JFrame {
             writer.write("\n"+ControllerConfig.ip);
             writer.write("\n"+ControllerConfig.host);
             writer.write("\n"+ControllerConfig.password);
-            writer.write("\ndbBeep&Go");
+            writer.write("\nEste es un archivo de configuración para la conexión, porfavor no borrar");
+            writer.write("\nThis a file of configuration of connection on database, please don't delete this file");
             writer.close();
             file.setReadOnly();
             hiddenFile();
@@ -219,6 +221,8 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 String[] listconf = new String[] {cont};
                 data[i] = listconf[0];
             }
+            readerfile.close();
+            reader.close();
         } catch (IOException e) {
             System.out.println(e.toString());
             e.printStackTrace(System.out);
@@ -234,6 +238,14 @@ public class FrmConfigConection extends javax.swing.JFrame {
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);
+        }
+    }
+    void deleteFile(){
+        file = new File(filename);
+        if (file.delete()) {
+             JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" +"datos, porque existen datos erroneos \n en el archivo creado","Archivo eliminado", JOptionPane.INFORMATION_MESSAGE);             
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" +"datos, y no se pudo borrar el archivo\n con las configuraciones", "Error grave", JOptionPane.WARNING_MESSAGE);
         }
     }
     /**
@@ -283,7 +295,8 @@ public class FrmConfigConection extends javax.swing.JFrame {
                         login.setVisible(true);                             
                         //no pongo q cierre el frm de conf, porque no ha abierto en este momento
                     }else{
-                        config.setVisible(true);//para volver a config, porque salio algo mal
+                        config.setVisible(true);//para volver a config, porque salio algo mal                        
+                        config.deleteFile();
                     }
                 }else{
                     config.setVisible(true);//cuando no exista el archivo

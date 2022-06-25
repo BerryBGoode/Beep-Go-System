@@ -32,7 +32,6 @@ public class ModelConexion {
             return connection;
         } catch (SQLException e) {
             System.out.println(e.toString());
-            e.printStackTrace(System.out);
             return null;
         }
     }
