@@ -784,15 +784,27 @@ public class FrmDashboard extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    PanelDashboard _pnldash = new PanelDashboard();
+    PanelUsuarios _pnlusers = new PanelUsuarios();
+    
     private void lblNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNormalMouseClicked
         // TODO add your handling code here:
         NormalMode();
+         ValidacionesSistema.ValidacionesBeep_Go.setModo(2);
+         if (_pnldash.isVisible()) {
+            _pnldash.hide();
+            showPanelDash();
+        }
     }//GEN-LAST:event_lblNormalMouseClicked
 
     private void btnMOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMOMouseClicked
         // TODO add your handling code here:
         DarkMode();
-        ValidacionesSistema.ValidacionesBeep_Go.Modo = 1;        
+        ValidacionesSistema.ValidacionesBeep_Go.setModo(1);        
+        if (_pnldash.isVisible()) {
+            _pnldash.hide();
+            showPanelDash();
+        }
     }//GEN-LAST:event_btnMOMouseClicked
 
     private void btnDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseClicked
