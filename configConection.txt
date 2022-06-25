@@ -1,5 +1,0 @@
-sa
-localhost
-1433
-FerMena318
-dbBeep&Go
