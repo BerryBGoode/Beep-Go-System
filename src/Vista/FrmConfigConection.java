@@ -202,8 +202,8 @@ public class FrmConfigConection extends javax.swing.JFrame {
             writer.write("\n"+ControllerConfig.ip);
             writer.write("\n"+ControllerConfig.host);
             writer.write("\n"+ControllerConfig.password);
-            writer.write("\nEste es un archivo de configuración para la conexión, porfavor no borrar");
-            writer.write("\nThis a file of configuration of connection on database, please don't delete this file");
+            writer.write("\nEste es un archivo de configuración para la conexión, porfavor no borrar\n");
+            writer.write("This a file of configuration of connection on database, please don't delete this file");
             writer.close();
             file.setReadOnly();
             hiddenFile();
