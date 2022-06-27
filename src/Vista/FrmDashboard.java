@@ -8,9 +8,11 @@ package Vista;
 import Controles_Personalizados.Paneles.PanelRound;
 import com.sun.awt.AWTUtilities;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
@@ -32,6 +34,7 @@ public class FrmDashboard extends javax.swing.JFrame{
         this.setLocationRelativeTo(null); 
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
          AWTUtilities. setWindowShape(this, forma);
+         setIconImage(Logo());
          lblNormal.setVisible(false);
          lblUsuarioDark.setVisible(false);
          lblNight.setVisible(false);
@@ -57,7 +60,10 @@ public class FrmDashboard extends javax.swing.JFrame{
          PanelContenedorForms.revalidate();
          PanelContenedorForms.repaint();
     }
-
+public Image Logo(){
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+    return retvalue;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

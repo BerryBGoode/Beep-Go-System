@@ -6,7 +6,9 @@
 package Vista;
 
 import com.sun.awt.AWTUtilities;
+import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
 
 /**
@@ -23,8 +25,12 @@ public class FrmPersonalSinCarnet extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
         AWTUtilities. setWindowShape(this, forma);
+        setIconImage(Logo());
     }
-
+public Image Logo(){
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+    return retvalue;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
