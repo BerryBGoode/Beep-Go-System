@@ -7,7 +7,9 @@ package Vista;
 
 import Controles_Personalizados.Calendario.DateChooser;
 import com.sun.awt.AWTUtilities;
+import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 
@@ -27,7 +29,12 @@ public class FrmAgg_Personal extends javax.swing.JFrame {
          AWTUtilities. setWindowShape(this, forma);
          dateChooser.setVisible(false);
          btnSelect.setVisible(false);
+         setIconImage(Logo());
     }
+    public Image Logo(){
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+    return retvalue;
+}
     public int typestaff;//if type is 1, is a employee or teacher
     //and if type is 2, is a student
 
