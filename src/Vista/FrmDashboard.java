@@ -796,8 +796,9 @@ public Image Logo(){
     private void lblNormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNormalMouseClicked
         // TODO add your handling code here:
         NormalMode();
-         ValidacionesSistema.ValidacionesBeep_Go.setModo(2);
-         if (_pnldash.isVisible()) {
+        ValidacionesSistema.ValidacionesBeep_Go.Modo = 2;
+        if (_pnldash.isShowing()) {
+            
             _pnldash.hide();
             showPanelDash();
         }
@@ -806,9 +807,10 @@ public Image Logo(){
     private void btnMOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMOMouseClicked
         // TODO add your handling code here:
         DarkMode();
-        ValidacionesSistema.ValidacionesBeep_Go.setModo(1);        
+        ValidacionesSistema.ValidacionesBeep_Go.Modo= 1;        
+        _pnldash.hide();
         if (_pnldash.isVisible()) {
-            _pnldash.hide();
+            
             showPanelDash();
         }
     }//GEN-LAST:event_btnMOMouseClicked
@@ -871,6 +873,10 @@ public Image Logo(){
                 
             break;
             default:
+                break;
+        }     
+        switch(ValidacionesSistema.ValidacionesBeep_Go.getModo()){
+            case 1:
                 break;
         }
     }//GEN-LAST:event_formWindowActivated
