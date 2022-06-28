@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JFrame;
 
 /**
  *
@@ -112,8 +113,13 @@ public Image Logo(){
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/carnet-add.png"))); // NOI18N
         panelRound1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseClicked(evt);
+            }
+        });
         panelRound1.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, -1, -1));
 
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/CerrarLogin.png"))); // NOI18N
@@ -140,6 +146,11 @@ public Image Logo(){
         PanelOpcionesPersonal.showinter = 0;
         this.dispose();        
     }//GEN-LAST:event_btnCerrarMousePressed
+
+    private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
+        // TODO add your handling code here:
+        this.setExtendedState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizarMouseClicked
 
     /**
      * @param args the command line arguments

@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 /**
  *
@@ -77,8 +78,13 @@ public Image Logo(){
         });
         panelRound1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseClicked(evt);
+            }
+        });
         panelRound1.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, -1, -1));
 
         btnListo.setBackground(new java.awt.Color(42, 36, 56));
@@ -247,6 +253,11 @@ public Image Logo(){
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnListoActionPerformed
+
+    private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
+        // TODO add your handling code here:
+        this.setExtendedState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizarMouseClicked
 
     /**
      * @param args the command line arguments
