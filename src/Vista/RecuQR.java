@@ -127,7 +127,7 @@ public Image Logo(){
         ImagenRecuQR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/QRimg.png"))); // NOI18N
         PanelContenedor.add(ImagenRecuQR, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMinimizarMouseClicked(evt);
