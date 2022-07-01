@@ -188,6 +188,7 @@ public Image Logo(){
     private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
         // TODO add your handling code here:
         this.setExtendedState(JFrame.ICONIFIED);
+        //Que guapos somos
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
     /**
