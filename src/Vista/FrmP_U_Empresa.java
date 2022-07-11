@@ -5,12 +5,27 @@
  */
 package Vista;
 
+import Controlador.ControllerP_U_Empresa;
 import com.sun.awt.AWTUtilities;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.LongProperty;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -18,20 +33,27 @@ import javax.swing.JFrame;
  */
 public class FrmP_U_Empresa extends javax.swing.JFrame {
 
+   ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
+
+    byte[] icono;
+    ImageIcon logo;
+
     /**
      * Creates new form PrimerUsoEmpresa
      */
     public FrmP_U_Empresa() {
         initComponents();
-        this.setLocationRelativeTo(null); 
-         Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
-         AWTUtilities. setWindowShape(this, forma);
-         setIconImage(Logo());
+        this.setLocationRelativeTo(null);
+        Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 40, 40);
+        AWTUtilities.setWindowShape(this, forma);
+        setIconImage(Logo());
     }
-public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
-    return retvalue;
-}
+
+    public Image Logo() {
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
+        return retvalue;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,8 +72,8 @@ public Image Logo(){
         txtRepresentanteLegal = new Controles_Personalizados.textfields.TextField();
         txtNIT = new Controles_Personalizados.textfields.TextField();
         btnExaminar = new Controles_Personalizados.Botones.ButtonGradient();
-        PanelFt = new Controles_Personalizados.Paneles.PanelRound();
         lblLogo = new javax.swing.JLabel();
+        LblImgLogo = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JLabel();
@@ -136,17 +158,21 @@ public Image Logo(){
         btnExaminar.setColor1(new java.awt.Color(42, 36, 56));
         btnExaminar.setColor2(new java.awt.Color(42, 36, 56));
         btnExaminar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        PanelContenedorCampos.add(btnExaminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 420, 150, -1));
-
-        PanelFt.setBackground(new java.awt.Color(254, 254, 254));
-        PanelFt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 36, 56), 2));
-        PanelFt.setPreferredSize(new java.awt.Dimension(154, 192));
-        PanelContenedorCampos.add(PanelFt, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, -1, -1));
+        btnExaminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExaminarActionPerformed(evt);
+            }
+        });
+        PanelContenedorCampos.add(btnExaminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 150, -1));
 
         lblLogo.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
         lblLogo.setForeground(new java.awt.Color(91, 91, 95));
         lblLogo.setText("Logo - Empresa");
-        PanelContenedorCampos.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, -1, -1));
+        PanelContenedorCampos.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
+
+        LblImgLogo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        LblImgLogo.setPreferredSize(new java.awt.Dimension(154, 192));
+        PanelContenedorCampos.add(LblImgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 220, 250));
 
         PanelFondo.add(PanelContenedorCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -161,13 +187,13 @@ public Image Logo(){
         });
         PanelFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 20, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMinimizarMouseClicked(evt);
             }
         });
-        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 20, -1, -1));
+        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 21, -1, -1));
 
         getContentPane().add(PanelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -176,9 +202,15 @@ public Image Logo(){
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        FrmP_U_Personal pu = new FrmP_U_Personal();
-        pu.setVisible(true);
-        this.dispose();
+        if (txtNombreEmpresa.getText().trim().isEmpty()||txtRepresentanteLegal.getText().trim().isEmpty()||txtDireccionEmpresa.getText().trim().isEmpty()||txtNIT.getText().trim().isEmpty()||txtCNR.getText().trim().isEmpty()) {
+           JOptionPane.showMessageDialog(null,"Existen campos vacios","Campos vacios", JOptionPane.OK_OPTION);
+        }else{
+            IngresarDatos();
+            FrmP_U_Personal pu = new FrmP_U_Personal();
+            pu.setVisible(true);
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
@@ -190,7 +222,51 @@ public Image Logo(){
         this.setExtendedState(JFrame.ICONIFIED);
         //Que guapos somos
     }//GEN-LAST:event_btnMinimizarMouseClicked
-
+    void cargarImagen() {
+        JFileChooser jcargar = new JFileChooser();
+        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG", "PNG", "JPG");
+        jcargar.setFileFilter(fil);
+        int s = jcargar.showOpenDialog(this);
+        if (s == JFileChooser.APPROVE_OPTION) {
+            String ruta = jcargar.getSelectedFile().getAbsolutePath();
+            //Capturar imagen
+            try {
+                File rutapath = new File(ruta);
+                icono=new byte[(int) rutapath.length()];
+                InputStream input = new FileInputStream(rutapath);
+                input.read(icono);
+                VistapEmpresa.setLogo(icono);
+            } catch (Exception e) {
+                VistapEmpresa.setLogo(null);
+            }
+            //Mostrar imagen
+            try {
+                byte[] bi=VistapEmpresa.getLogo();
+                BufferedImage image=null;
+                InputStream in= new ByteArrayInputStream(bi);
+                image=ImageIO.read(in);
+                logo=new ImageIcon(image.getScaledInstance(220, 250, 0));
+                LblImgLogo.setIcon(logo);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+    }
+    private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
+        // TODO add your handling code here:
+        cargarImagen();
+    }//GEN-LAST:event_btnExaminarActionPerformed
+void IngresarDatos(){
+    VistapEmpresa.nombre_empresa=txtNombreEmpresa.getText();
+    VistapEmpresa.direccion=txtDireccionEmpresa.getText();
+    VistapEmpresa.representante=txtRepresentanteLegal.getText();
+    VistapEmpresa.nit=txtNIT.getText();
+    VistapEmpresa.cnr=txtCNR.getText();
+    VistapEmpresa.logo=icono;
+    if (VistapEmpresa.IngresarP_EmpresaController()==true) {
+        JOptionPane.showMessageDialog(null, "Su registro ha sido ingresado correctamente","Ingreso completado",JOptionPane.INFORMATION_MESSAGE);
+    }
+}
     /**
      * @param args the command line arguments
      */
@@ -229,9 +305,9 @@ public Image Logo(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Imagen;
+    private javax.swing.JLabel LblImgLogo;
     private Controles_Personalizados.Paneles.PanelRound PanelContenedorCampos;
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
-    private Controles_Personalizados.Paneles.PanelRound PanelFt;
     private javax.swing.JLabel btnCerrar;
     private Controles_Personalizados.Botones.ButtonGradient btnContinuar;
     private Controles_Personalizados.Botones.ButtonGradient btnExaminar;

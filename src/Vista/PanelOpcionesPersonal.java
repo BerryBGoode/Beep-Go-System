@@ -27,7 +27,7 @@ public class PanelOpcionesPersonal extends javax.swing.JFrame{
         setIconImage(Logo());
     }
 public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_ProyectoB&G Morado 2.png"));
     return retvalue;
 }
     /**

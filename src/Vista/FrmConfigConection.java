@@ -5,7 +5,6 @@
  */
 package Vista;
 
-
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import com.sun.awt.AWTUtilities;
@@ -19,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author ferna
@@ -28,21 +28,23 @@ public class FrmConfigConection extends javax.swing.JFrame {
     File file;
     final String filename = "configConection.txt";
     public String[] data = new String[5];
-        
+    
     /**
      * Creates new form FrmConfigConection
      */
     public FrmConfigConection() {
         initComponents();
         setLocationRelativeTo(null);
-        Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
-        AWTUtilities. setWindowShape(this, forma);
+        Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 40, 40);
+        AWTUtilities.setWindowShape(this, forma);
         setIconImage(Logo());
     }
-public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
-    return retvalue;
-}
+
+    public Image Logo() {
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+        return retvalue;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,7 +160,7 @@ public Image Logo(){
         System.exit(0);
     }//GEN-LAST:event_btnCerrarMousePressed
 
-    
+
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveConfig();
         this.dispose();
@@ -168,13 +170,13 @@ public Image Logo(){
         // TODO add your handling code here:
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
-    void saveConfig(){
+    void saveConfig() {
         getDataConfig();
-        if (ControllerConfig.username == "" && ControllerConfig.host == "" 
+        if (ControllerConfig.username == "" && ControllerConfig.host == ""
                 && ControllerConfig.ip == "" && ControllerConfig.password == "") {
 
-                JOptionPane.showMessageDialog(null, "Existen campos vacíos, porfavor llenarlos", "Campos vacios", 0);
-        }else{
+            JOptionPane.showMessageDialog(null, "Existen campos vacíos, porfavor llenarlos", "Campos vacios", 0);
+        } else {
             if (ControllerConexion.getConnectionModel() != null) {
                 FrmLogin login = new FrmLogin();
                 createFile();
@@ -182,27 +184,30 @@ public Image Logo(){
                 JOptionPane.showMessageDialog(null, "Se guardo un archivo con\n los datos de la conexón", "Archivo guardado", JOptionPane.INFORMATION_MESSAGE);
                 login.setVisible(true);
                 this.dispose();
-            }else{
-                JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" +"datos", "Error 001", 2);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" + "datos", "Error 001", 2);
             }
-        }        
-  
+        }
+
     }
-    void getDataConfig(){
-        ControllerConfig.setUsername(txtUsuario.getText());       
-        ControllerConfig.ip = txtIP.getText();        
+
+    void getDataConfig() {
+        ControllerConfig.setUsername(txtUsuario.getText());
+        ControllerConfig.ip = txtIP.getText();
         ControllerConfig.host = txtHost.getText();
         ControllerConfig.password = txtcontra.getText();
     }
-    boolean checkFile(){//verifica si existe un archivo y retorna true si existe
+
+    boolean checkFile() {//verifica si existe un archivo y retorna true si existe
         file = new File(filename);
         if (file.exists()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    void createFile(){
+
+    void createFile() {
         file = new File(filename);
         try {
             file.createNewFile();
@@ -210,15 +215,16 @@ public Image Logo(){
             e.printStackTrace(System.out);
         }
     }
-    void writeFile(){
+
+    void writeFile() {
         file = new File(filename);
         try {
             FileWriter writer = new FileWriter(filename);
-            
+
             writer.write(ControllerConfig.username);
-            writer.write("\n"+ControllerConfig.ip);
-            writer.write("\n"+ControllerConfig.host);
-            writer.write("\n"+ControllerConfig.password);
+            writer.write("\n" + ControllerConfig.ip);
+            writer.write("\n" + ControllerConfig.host);
+            writer.write("\n" + ControllerConfig.password);
             writer.write("\nEste es un archivo de configuración para la conexión, porfavor no borrar\n");
             writer.write("This a file of configuration of connection on database, please don't delete this file");
             writer.close();
@@ -228,14 +234,15 @@ public Image Logo(){
             e.printStackTrace(System.out);
         }
     }
-    void readFile(){
+
+    void readFile() {
         String cont;
         try {
             FileReader readerfile = new FileReader(filename);
             BufferedReader reader = new BufferedReader(readerfile);
             for (int i = 0; i < 5; i++) {
                 cont = reader.readLine();
-                String[] listconf = new String[] {cont};
+                String[] listconf = new String[]{cont};
                 data[i] = listconf[0];
             }
             readerfile.close();
@@ -245,7 +252,8 @@ public Image Logo(){
             e.printStackTrace(System.out);
         }
     }
-    void hiddenFile(){
+
+    void hiddenFile() {
         try {
             Path repo = Paths.get(filename);
             String atri = "dos:hidden";
@@ -257,19 +265,21 @@ public Image Logo(){
             e.printStackTrace(System.out);
         }
     }
-    void deleteFile(){
+
+    void deleteFile() {
         file = new File(filename);
         if (file.delete()) {
-             JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" +"datos, porque existen datos erroneos \n en el archivo creado","Archivo eliminado", JOptionPane.INFORMATION_MESSAGE);             
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" +"datos, y no se pudo borrar el archivo\n con las configuraciones", "Error grave", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" + "datos, porque existen datos erroneos \n en el archivo creado", "Archivo eliminado", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" + "datos, y no se pudo borrar el archivo\n con las configuraciones", "Error grave", JOptionPane.WARNING_MESSAGE);
         }
     }
     /**
      * @param args the command line arguments
-     */      
+     */
     static FrmConfigConection config = new FrmConfigConection();
     static FrmLogin login = new FrmLogin();
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -296,31 +306,54 @@ public Image Logo(){
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {                                                      
+            public void run() {
                 if (config.checkFile() == true) {
-                //existe file
+                    //existe file
                     config.readFile();
                     ControllerConfig.username = config.data[0];
                     ControllerConfig.ip = config.data[1];
                     ControllerConfig.host = config.data[2];
                     ControllerConfig.password = config.data[3];
-                //lee los valores y los asigna a los attr
-                    if (ControllerConexion.getConnectionModel() != null) {
+                    ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
+                    boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
+                    ControllerP_U_Personal PrimerPersonal=new ControllerP_U_Personal();
+                    
+                    //lee los valores y los asigna a los attr
+                    if (ControllerConexion.getConnectionModel() != null&&primeraempresa==false) {
+                        FrmP_U_Empresa emp = new FrmP_U_Empresa();
+                        emp.setVisible(true);
+                     
                         //en este proceso se verifica el proceso de primer uso
                         //EMPPRESA, PERSONA Y USUARIO
                         //por el momento abre hacia el login
-                        login.setVisible(true);                             
-                        //no pongo q cierre el frm de conf, porque no ha abierto en este momento
-                    }else{
+                        /////login.setVisible(true);                             
+                        //no pongo q cierre el frm de conf, porque no ha abierto en este momento        
+                    } 
+                    else if (primeraempresa==true) {
+                            FrmP_U_Personal pe=new FrmP_U_Personal();
+                            pe.setVisible(true);
+                        }
+                    
+                    else{
                         config.setVisible(true);//para volver a config, porque salio algo mal                        
                         config.deleteFile();
                     }
-                }else{
+                } else {
                     config.setVisible(true);//cuando no exista el archivo
                 }
             }
         });
-        
+
+    }
+
+    @Override
+    public boolean isFocused() {
+        return super.isFocused(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify(); //To change body of generated methods, choose Tools | Templates.
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

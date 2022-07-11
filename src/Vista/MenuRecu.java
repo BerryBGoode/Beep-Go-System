@@ -29,7 +29,7 @@ public class MenuRecu extends javax.swing.JFrame {
          setIconImage(Logo());
     }
 public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
     return retvalue;
 }
     /**
@@ -146,7 +146,7 @@ public Image Logo(){
         lblText.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/OlvideContraText.png"))); // NOI18N
         PanelFondo.add(lblText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMinimizarMouseClicked(evt);
