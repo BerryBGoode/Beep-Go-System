@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
+import Controlador.ControllerVehiculos;
 import com.sun.awt.AWTUtilities;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,6 +132,49 @@ public Image Logo(){
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
+    void GuardarVehiculo() {
+        if (txtPlaca.getText().trim().isEmpty() || txtColor.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Existen campos vacíos, favor llenar todos los campos", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            ControllerVehiculos.placa = txtPlaca.getText();
+            ControllerVehiculos.color = txtColor.getText();
+            //ControllerVehiculos.idpersonal = cmbPersonal.getSelectedItem();
+            int respuesta = ControllerVehiculos.RegistrarVehiculo_Controller();
+            if (respuesta == 1) {
+                JOptionPane.showMessageDialog(null, "Vehiculo registrado con exito", "Proceso de insersion", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No fue registrado el vehiculo", "Proceso de insersion", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+    
+    void ActualizarVehiculo() {
+        ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
+        ControllerVehiculos.placa = txtPlaca.getText();
+        ControllerVehiculos.color = txtColor.getText();
+        boolean respuesta = ControllerVehiculos.ActualizarVehiculo_Controller();
+        if (respuesta == true) {
+            JOptionPane.showMessageDialog(null, "Se ha actualizado el registro", "Proceso de actualizacion", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se actualizo el registro", "Proceso de actualizacion", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    void EliminarVehiculo() {
+        int confirmacion = JOptionPane.YES_NO_OPTION;
+        JOptionPane.showConfirmDialog(this, "¿Estas seguro que quieres eliminar el registro?", "Confirmacion de eliminacion", confirmacion);
+        if(confirmacion == JOptionPane.YES_OPTION) {
+            ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
+            boolean respuesta = ControllerVehiculos.EliminarVehiculo_Controller();
+            if(respuesta == true) {
+                JOptionPane.showMessageDialog(null, "Registro eliminado con exito", "Proceso de eliminacion", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro no fue eliminado", "Proceso de eliminacion", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
