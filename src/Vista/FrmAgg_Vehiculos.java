@@ -149,7 +149,7 @@ public Image Logo(){
     }
     
     void ActualizarVehiculo() {
-        ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
+        //ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
         ControllerVehiculos.placa = txtPlaca.getText();
         ControllerVehiculos.color = txtColor.getText();
         boolean respuesta = ControllerVehiculos.ActualizarVehiculo_Controller();
@@ -164,7 +164,7 @@ public Image Logo(){
         int confirmacion = JOptionPane.YES_NO_OPTION;
         JOptionPane.showConfirmDialog(this, "¿Estas seguro que quieres eliminar el registro?", "Confirmacion de eliminacion", confirmacion);
         if(confirmacion == JOptionPane.YES_OPTION) {
-            ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
+            //ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
             boolean respuesta = ControllerVehiculos.EliminarVehiculo_Controller();
             if(respuesta == true) {
                 JOptionPane.showMessageDialog(null, "Registro eliminado con exito", "Proceso de eliminacion", JOptionPane.INFORMATION_MESSAGE);
