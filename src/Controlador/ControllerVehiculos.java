@@ -47,6 +47,10 @@ public class ControllerVehiculos {
         return ModelVehiculos.CargarTabla(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
     }
     
+    public static ResultSet CargarCMBPersonal_Controller() {
+        return ModelVehiculos.CargarCMBPersonal(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+    }
+    
     public static int RegistrarVehiculo_Controller() {
         return ModelVehiculos.RegistrarVehiculo(idpersonal, placa, color, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
     }

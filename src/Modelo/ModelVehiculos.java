@@ -34,6 +34,23 @@ public class ModelVehiculos {
         
     }
     
+    public static ResultSet CargarCMBPersonal(String ip, String host, String username, String pwd) {
+        
+        Connection connect;
+        
+        try {
+            connect = ModelConexion.getConnection();
+            String query = "SELECT nombre_p, apellido_p FROM tbPersonal";
+            ps = connect.prepareStatement(query);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+            return null;
+        }
+        
+    }
+    
     public static int RegistrarVehiculo(int idpersonal, String placa, String color, String ip, String host, String username, String pwd) {
         Connection connect;
         try {
