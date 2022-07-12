@@ -26,10 +26,10 @@ public class FrmLogin extends javax.swing.JFrame {
          this.setLocationRelativeTo(null); 
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
          AWTUtilities. setWindowShape(this, forma);
-         setIconImage(Logo());
+         this.setIconImage(Logo());
     }
 public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
+    Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
     return retvalue;
 }
     /**
