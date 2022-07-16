@@ -127,6 +127,7 @@ public Image Logo(){
 
     private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
         this.dispose();
+        PanelOpcionesPersonal.showinter = 0;
     }//GEN-LAST:event_btnCerrarMousePressed
 
     private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked

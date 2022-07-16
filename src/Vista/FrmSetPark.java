@@ -259,6 +259,9 @@ public Image Logo(){
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
+    void getAccess(){
+        
+    }
     /**
      * @param args the command line arguments
      */
