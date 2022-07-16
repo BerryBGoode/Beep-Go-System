@@ -8,6 +8,8 @@ package Vista;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.Shape;
 import com.sun.awt.AWTUtilities;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 /**
  *
@@ -23,8 +25,12 @@ public class FrmPersonal_Contacto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
         AWTUtilities. setWindowShape(this, forma);
+        setIconImage(Logo());
     }
-
+public Image Logo(){
+    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
+    return retvalue;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,7 +55,7 @@ public class FrmPersonal_Contacto extends javax.swing.JFrame {
         panelRound1.setBackground(new java.awt.Color(58, 50, 75));
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
