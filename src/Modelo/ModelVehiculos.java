@@ -17,7 +17,7 @@ public class ModelVehiculos {
     public static PreparedStatement ps;
     public static ResultSet rs;
     
-    public static ResultSet CargarTabla(String ip, String host, String username, String pwd) {
+    public static ResultSet CargarTabla() {
         
         Connection connect;
         
@@ -27,14 +27,14 @@ public class ModelVehiculos {
             ps = connect.prepareStatement(query);
             rs = ps.executeQuery();
             return rs;
-        } catch(Exception e) {
+        } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
             return null;
         }
         
     }
     
-    public static ResultSet CargarCMBPersonal(String ip, String host, String username, String pwd) {
+    public static ResultSet CargarCMBPersonal() {
         
         Connection connect;
         
@@ -44,14 +44,14 @@ public class ModelVehiculos {
             ps = connect.prepareStatement(query);
             rs = ps.executeQuery();
             return rs;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
             return null;
         }
         
     }
     
-    public static int RegistrarVehiculo(int idpersonal, String placa, String color, String ip, String host, String username, String pwd) {
+    public static int RegistrarVehiculo(int idpersonal, String placa, String color) {
         Connection connect;
         try {
             connect = ModelConexion.getConnection();
@@ -69,7 +69,7 @@ public class ModelVehiculos {
         
     }
     
-    public static boolean ActualizarVehiculo(int idVehiculo, int idpersonal, String placa, String color, String ip, String host, String username, String pwd) {
+    public static boolean ActualizarVehiculo(int idVehiculo, int idpersonal, String placa, String color) {
       Connection connect;
       try {
           connect = ModelConexion.getConnection();
@@ -81,13 +81,13 @@ public class ModelVehiculos {
           ps.setInt(4, idVehiculo);
           ps.execute();
           return true;
-      } catch (Exception e) {
+      } catch (SQLException e) {
           JOptionPane.showMessageDialog(null, "Ocurrio un error mientras se actualizaba el registro, vuelva a intentarlo" + e.toString(), "Proceso de actualizacion", JOptionPane.ERROR_MESSAGE);
           return false;
       }
     }
     
-    public static boolean EliminarVehiculo(int idVehiculo, String ip, String host, String username, String pwd) {
+    public static boolean EliminarVehiculo(int idVehiculo) {
         Connection connect;
         try {
             connect = ModelConexion.getConnection();
@@ -96,10 +96,10 @@ public class ModelVehiculos {
             ps.setInt(1, idVehiculo);
             ps.execute();
             return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error durante el proceso de eliminacion del registro" + e.toString(), "Proceso de eliminacion", JOptionPane.ERROR_MESSAGE);
             return false;
-        }
+        } 
     }
     
 }

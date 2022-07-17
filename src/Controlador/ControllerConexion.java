@@ -6,14 +6,16 @@
 package Controlador;
 
 import java.sql.Connection;
-import Modelo.*;
+import Modelo.ModelConexion;
 /**
  *
  * @author danlo and Ferna
  */
 public class ControllerConexion {
     
+    
     public static Connection getConnectionModel(){
+                
         return ModelConexion.getConnection();
     }
 }

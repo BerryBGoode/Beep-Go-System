@@ -44,22 +44,22 @@ public class ControllerVehiculos {
     }
     
     public static ResultSet CargarTablaVehiculos_Controller() {
-        return ModelVehiculos.CargarTabla(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.CargarTabla();
     }
     
     public static ResultSet CargarCMBPersonal_Controller() {
-        return ModelVehiculos.CargarCMBPersonal(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.CargarCMBPersonal();
     }
     
     public static int RegistrarVehiculo_Controller() {
-        return ModelVehiculos.RegistrarVehiculo(idpersonal, placa, color, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.RegistrarVehiculo(idpersonal, placa, color);
     }
     
     public static boolean ActualizarVehiculo_Controller() {
-        return ModelVehiculos.ActualizarVehiculo(idvehiculo, idpersonal, placa, color, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.ActualizarVehiculo(idvehiculo, idpersonal, placa, color);
     }
     
     public static boolean EliminarVehiculo_Controller() {
-        return ModelVehiculos.EliminarVehiculo(idvehiculo, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.EliminarVehiculo(idvehiculo);
     }
 }

@@ -139,7 +139,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
         });
         panelRound1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -172,8 +172,8 @@ public class FrmConfigConection extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinimizarMouseClicked
     void saveConfig() {
         getDataConfig();
-        if (ControllerConfig.username == "" && ControllerConfig.host == ""
-                && ControllerConfig.ip == "" && ControllerConfig.password == "") {
+        if (ControllerConfig.getUsername() == "" && ControllerConfig.getHost() == ""
+                && ControllerConfig.getIp() == "" && ControllerConfig.getPassword() == "") {
 
             JOptionPane.showMessageDialog(null, "Existen campos vacíos, porfavor llenarlos", "Campos vacios", 0);
         } else {
@@ -182,20 +182,41 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 createFile();
                 writeFile();
                 JOptionPane.showMessageDialog(null, "Se guardo un archivo con\n los datos de la conexón", "Archivo guardado", JOptionPane.INFORMATION_MESSAGE);
-                login.setVisible(true);
-                this.dispose();
+                
+                ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
+                boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
+                ControllerP_U_Personal primerPersonal=new ControllerP_U_Personal();
+                
+                if (primeraempresa == false) {
+                    FrmP_U_Empresa enter = new FrmP_U_Empresa();
+                    enter.setVisible(true);
+                }else {
+                    if (primeraempresa == true) {
+                        //verficar primer usuario
+                        login.setVisible(true);
+                    }
+                }
+                
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" + "datos", "Error 001", 2);
+                /*esto porque me cerraba el frm al dale ok al msg anterior */
+                int conf = JOptionPane.YES_NO_OPTION;                
+                JOptionPane.showConfirmDialog(this, "No se pudo establecer \n" + "conexión con la base de \n" + "datos"+"\n Error 001", "¿Desea volver a intentar?", conf);
+                if (conf == JOptionPane.YES_OPTION) {
+                    FrmConfigConection config = new FrmConfigConection();
+                    config.setVisible(true);
+                }
+                
+                
             }
         }
 
     }
 
     void getDataConfig() {
+        ControllerConfig.setIp(txtIP.getText());
+        ControllerConfig.setHost(txtHost.getText());
         ControllerConfig.setUsername(txtUsuario.getText());
-        ControllerConfig.ip = txtIP.getText();
-        ControllerConfig.host = txtHost.getText();
-        ControllerConfig.password = txtcontra.getText();
+        ControllerConfig.setPassword(txtcontra.getText());
     }
 
     boolean checkFile() {//verifica si existe un archivo y retorna true si existe
@@ -221,10 +242,10 @@ public class FrmConfigConection extends javax.swing.JFrame {
         try {
             FileWriter writer = new FileWriter(filename);
 
-            writer.write(ControllerConfig.username);
-            writer.write("\n" + ControllerConfig.ip);
-            writer.write("\n" + ControllerConfig.host);
-            writer.write("\n" + ControllerConfig.password);
+            writer.write(ControllerConfig.getUsername());
+            writer.write("\n" + ControllerConfig.getIp());
+            writer.write("\n" + ControllerConfig.getHost());
+            writer.write("\n" + ControllerConfig.getPassword());
             writer.write("\nEste es un archivo de configuración para la conexión, porfavor no borrar\n");
             writer.write("This a file of configuration of connection on database, please don't delete this file");
             writer.close();
@@ -310,13 +331,14 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 if (config.checkFile() == true) {
                     //existe file
                     config.readFile();
-                    ControllerConfig.username = config.data[0];
-                    ControllerConfig.ip = config.data[1];
-                    ControllerConfig.host = config.data[2];
-                    ControllerConfig.password = config.data[3];
+                    ControllerConfig.setUsername(config.data[0]);
+                    ControllerConfig.setIp(config.data[1]);
+                    ControllerConfig.setHost(config.data[2]);
+                    ControllerConfig.setPassword(config.data[3]);
+                    
                     ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
                     boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
-                    ControllerP_U_Personal PrimerPersonal=new ControllerP_U_Personal();
+                    ControllerP_U_Personal primerPersonal=new ControllerP_U_Personal();
                     
                     //lee los valores y los asigna a los attr
                     if (ControllerConexion.getConnectionModel() != null&&primeraempresa==false) {
@@ -329,9 +351,15 @@ public class FrmConfigConection extends javax.swing.JFrame {
                         /////login.setVisible(true);                             
                         //no pongo q cierre el frm de conf, porque no ha abierto en este momento        
                     } 
-                    else if (primeraempresa==true) {
+                    else if (primeraempresa==true) {//Comienzo del priemer uso
                             FrmP_U_Personal pe=new FrmP_U_Personal();
                             pe.setVisible(true);
+                            
+                            //modificar.
+                            //verificar si existe un usuario 
+                            //si existen, pasar al login 
+                            //si no exsiten la primer uso
+                            
                         }
                     
                     else{
