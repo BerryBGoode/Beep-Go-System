@@ -5,10 +5,14 @@
  */
 package Controlador;
 
+import java.sql.ResultSet;
+import Modelo.ModelAccesos;
 /**
  *
  * @author danlo
  */
 public class ControllerAccesos {
-    
+    public static ResultSet getdata(String tablename){
+        return ModelAccesos.getdata(tablename);
+    }
 }

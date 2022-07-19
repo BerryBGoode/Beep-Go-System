@@ -352,8 +352,9 @@ public class FrmConfigConection extends javax.swing.JFrame {
                         //no pongo q cierre el frm de conf, porque no ha abierto en este momento        
                     } 
                     else if (primeraempresa==true) {//Comienzo del priemer uso
-                            FrmP_U_Personal pe=new FrmP_U_Personal();
-                            pe.setVisible(true);
+                            login.setVisible(true);
+                            //FrmP_U_Personal pe=new FrmP_U_Personal();
+                            //pe.setVisible(true);
                             
                             //modificar.
                             //verificar si existe un usuario 

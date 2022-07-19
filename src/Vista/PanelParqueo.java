@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 /**
  *
  * @author danlo
@@ -16,6 +19,15 @@ public class PanelParqueo extends javax.swing.JPanel {
      */
     public PanelParqueo() {
         initComponents();
+        String[] headerpark = {"IDDetalleAcceso","Fecha", "IDAcceso", "Hora", "IDParqueo","Documento", "IDVehiculo",  "Nombres", "Apellidos", "Placa", "Color", "Nº Estacionamiento",  "Modificar", "Eliminar"};
+        tbpark = new DefaultTableModel(null, headerpark);
+        TbParqueosWhite.setModel(tbpark);
+        getdataPark();
+        TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(0));
+        TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(1));
+        TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(2));
+        TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(3));
+        //TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(11));
     }
 
     /**
@@ -32,7 +44,7 @@ public class PanelParqueo extends javax.swing.JPanel {
         btnFiltrar = new Controles_Personalizados.Botones.UWPButton();
         btnAgregar = new Controles_Personalizados.Botones.UWPButton();
         PanelTabla = new javax.swing.JScrollPane();
-        TbUsuariosWhite4 = new Controles_Personalizados.Tables.Table();
+        TbParqueosWhite = new Controles_Personalizados.Tables.Table();
         ScrollTabla = new Controles_Personalizados.ScrollBar.ScrollBarCustom();
 
         PanelFondo.setBackground(new java.awt.Color(231, 234, 239));
@@ -70,8 +82,8 @@ public class PanelParqueo extends javax.swing.JPanel {
         PanelTabla.setVerticalScrollBar(ScrollTabla);
         PanelTabla.setWheelScrollingEnabled(false);
 
-        TbUsuariosWhite4.setBackground(new java.awt.Color(231, 234, 239));
-        TbUsuariosWhite4.setModel(new javax.swing.table.DefaultTableModel(
+        TbParqueosWhite.setBackground(new java.awt.Color(231, 234, 239));
+        TbParqueosWhite.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -108,12 +120,12 @@ public class PanelParqueo extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TbUsuariosWhite4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        TbUsuariosWhite4.setGridColor(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setName(""); // NOI18N
-        TbUsuariosWhite4.setSelectionBackground(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setShowVerticalLines(false);
-        PanelTabla.setViewportView(TbUsuariosWhite4);
+        TbParqueosWhite.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        TbParqueosWhite.setGridColor(new java.awt.Color(58, 50, 75));
+        TbParqueosWhite.setName(""); // NOI18N
+        TbParqueosWhite.setSelectionBackground(new java.awt.Color(58, 50, 75));
+        TbParqueosWhite.setShowVerticalLines(false);
+        PanelTabla.setViewportView(TbParqueosWhite);
 
         PanelFondo.add(PanelTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 1230, 480));
 
@@ -144,6 +156,7 @@ public class PanelParqueo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     FrmConfigPark park = new FrmConfigPark();
+    DefaultTableModel tbpark;
     
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
         if (park.isVisible()) {
@@ -153,12 +166,31 @@ public class PanelParqueo extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 
+    void getdataPark(){
+        String tablename = "vwParqueos";
+        if (tbpark.getRowCount() > 0) {//si hay columnas antes de cargar 
+           tbpark.removeRow(0);      //borre las filas q tenía 
+        }else{//si no hay filas
+            try {
+              ResultSet rs = Controlador.ControllerAccesos.getdata(tablename);  
+                while (rs.next()) {                    
+                    Object [] data = {rs.getInt("idDetalleAcceso"), rs.getDate("fecha"), rs.getInt("idAcceso"), rs.getTime("hora"), rs.getInt("idParqueo"), rs.getString("numero_carnet"), rs.getInt("idVehiculo"), rs.getString("nombre_p"), rs.getString("apellido_p"), rs.getString("placa"), rs.getString("color"), rs.getInt("numero_parqueo")};
+                    tbpark.addRow(data);
+                //que recupere los datos q especifico con la columname y los guarde en un object
+                }
+            } catch (SQLException e) {
+                System.out.println("Error view: "+e.toString());
+            }
+            
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
     private javax.swing.JScrollPane PanelTabla;
     private Controles_Personalizados.ScrollBar.ScrollBarCustom ScrollTabla;
-    private Controles_Personalizados.Tables.Table TbUsuariosWhite4;
+    private Controles_Personalizados.Tables.Table TbParqueosWhite;
     private Controles_Personalizados.Botones.UWPButton btnAgregar;
     private Controles_Personalizados.Botones.UWPButton btnFiltrar;
     private javax.swing.JLabel lblParqueo;

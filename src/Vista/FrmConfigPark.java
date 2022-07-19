@@ -470,7 +470,7 @@ public Image Logo(){
         if (park.isVisible()) {
             park.toFront();
             park.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Se cerro el formulario anterior, debido a que no puede tenerlos al mismo tiempo abiertos", "Formulario cerraro", 0);
+            JOptionPane.showMessageDialog(null, "Se cerro el formulario anterior,\ndebido a que no puede tenerlos \nal mismo tiempo abiertos", "Formulario cerrado", JOptionPane.WARNING_MESSAGE);
         }else{
             park.setVisible(true);
             FrmSetPark.setParkname(parkname);
