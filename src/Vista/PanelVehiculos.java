@@ -5,6 +5,11 @@
  */
 package Vista;
 
+import Controlador.ControllerVehiculos;
+
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author danlo
@@ -16,6 +21,8 @@ public class PanelVehiculos extends javax.swing.JPanel {
      */
     public PanelVehiculos() {
         initComponents();
+        
+        CargarTablaVehiculos();
     }
 
     /**
@@ -32,7 +39,7 @@ public class PanelVehiculos extends javax.swing.JPanel {
         btnFiltrar = new Controles_Personalizados.Botones.UWPButton();
         btnAgregar = new Controles_Personalizados.Botones.UWPButton();
         PanelTabla = new javax.swing.JScrollPane();
-        TbUsuariosWhite4 = new Controles_Personalizados.Tables.Table();
+        TbVehiculos = new Controles_Personalizados.Tables.Table();
         ScrollTabla = new Controles_Personalizados.ScrollBar.ScrollBarCustom();
 
         PanelFondo.setBackground(new java.awt.Color(231, 234, 239));
@@ -75,8 +82,8 @@ public class PanelVehiculos extends javax.swing.JPanel {
         PanelTabla.setVerticalScrollBar(ScrollTabla);
         PanelTabla.setWheelScrollingEnabled(false);
 
-        TbUsuariosWhite4.setBackground(new java.awt.Color(231, 234, 239));
-        TbUsuariosWhite4.setModel(new javax.swing.table.DefaultTableModel(
+        TbVehiculos.setBackground(new java.awt.Color(231, 234, 239));
+        TbVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -113,12 +120,12 @@ public class PanelVehiculos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TbUsuariosWhite4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        TbUsuariosWhite4.setGridColor(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setName(""); // NOI18N
-        TbUsuariosWhite4.setSelectionBackground(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setShowVerticalLines(false);
-        PanelTabla.setViewportView(TbUsuariosWhite4);
+        TbVehiculos.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        TbVehiculos.setGridColor(new java.awt.Color(58, 50, 75));
+        TbVehiculos.setName(""); // NOI18N
+        TbVehiculos.setSelectionBackground(new java.awt.Color(58, 50, 75));
+        TbVehiculos.setShowVerticalLines(false);
+        PanelTabla.setViewportView(TbVehiculos);
 
         PanelFondo.add(PanelTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 1230, 480));
 
@@ -149,6 +156,11 @@ public class PanelVehiculos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     FrmPersonal_AggVehiculo add = new FrmPersonal_AggVehiculo();
+    FrmAgg_Vehiculos frmVehiculos = new FrmAgg_Vehiculos();
+    ControllerVehiculos objVehiculos = new ControllerVehiculos();
+    
+    DefaultTableModel model = new DefaultTableModel();
+    ResultSet rs;
     
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
         if (add.isVisible()) {
@@ -162,12 +174,30 @@ public class PanelVehiculos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-
+    final void CargarTablaVehiculos() {
+        
+        TbVehiculos.setModel(model);
+        
+        while(model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+        try {
+            rs = ControllerVehiculos.CargarTablaVehiculos_Controller();
+            while(rs.next()) {
+                Object[] oValues = {rs.getInt("idVehiculo"), rs.getInt("idPersonal"), rs.getString("placa"), rs.getString("color")};
+                model.addRow(oValues);
+            }
+        } catch(Exception e){
+        }
+        
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
     private javax.swing.JScrollPane PanelTabla;
     private Controles_Personalizados.ScrollBar.ScrollBarCustom ScrollTabla;
-    private Controles_Personalizados.Tables.Table TbUsuariosWhite4;
+    private Controles_Personalizados.Tables.Table TbVehiculos;
     private Controles_Personalizados.Botones.UWPButton btnAgregar;
     private Controles_Personalizados.Botones.UWPButton btnFiltrar;
     private javax.swing.JLabel lblVehiculos;

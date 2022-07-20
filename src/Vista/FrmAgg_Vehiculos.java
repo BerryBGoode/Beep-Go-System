@@ -7,8 +7,10 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -130,6 +132,7 @@ public Image Logo(){
     }// </editor-fold>//GEN-END:initComponents
 
     ControllerVehiculos objVehiculos = new ControllerVehiculos();
+    PanelVehiculos panel = new PanelVehiculos();
     
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
