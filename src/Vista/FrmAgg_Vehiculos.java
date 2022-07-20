@@ -49,7 +49,6 @@ public Image Logo(){
         btnCerrar = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JLabel();
         cmbPersonal = new Controles_Personalizados.ComboBox.combobox();
-        lblID = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -123,16 +122,12 @@ public Image Logo(){
         cmbPersonal.setLineColor(new java.awt.Color(253, 255, 254));
         panelRound1.add(cmbPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 310, 80));
 
-        lblID.setText("ID");
-        panelRound1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
-
         getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     ControllerVehiculos objVehiculos = new ControllerVehiculos();
-    PanelVehiculos panel = new PanelVehiculos();
     
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
@@ -232,7 +227,6 @@ public Image Logo(){
     private javax.swing.JLabel btnMinimizar;
     private Controles_Personalizados.ComboBox.combobox cmbPersonal;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblID;
     private Controles_Personalizados.Paneles.PanelRound panelRound1;
     private Controles_Personalizados.textfields.TextField txtColor;
     private Controles_Personalizados.textfields.TextField txtPlaca;

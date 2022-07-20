@@ -163,10 +163,10 @@ public class PanelVehiculos extends javax.swing.JPanel {
     ResultSet rs;
     
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        if (add.isVisible()) {
-            add.toFront();
+        if (frmVehiculos.isVisible()) {
+            frmVehiculos.toFront();
         }else{
-            add.setVisible(true);
+            frmVehiculos.setVisible(true);
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 
