@@ -5,6 +5,13 @@
  */
 package Vista;
 
+import Controlador.ControllerContactos;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author danlo
@@ -16,6 +23,34 @@ public class PanelContactos extends javax.swing.JPanel {
      */
     public PanelContactos() {
         initComponents();
+        
+        String[] headerContactos = {"Id Contacto", "contacto", "id Personal", "id TipoContacto", "Modificar", "Eliminar"};
+        model = new DefaultTableModel(null, headerContactos);
+        CargarTabla();
+    }
+    
+    DefaultTableModel model;
+    DefaultComboBoxModel<String> modelcombo = new DefaultComboBoxModel<>();
+    ArrayList list;
+    int tipo_contacto = 0;
+    int idpersonal = 0;
+    
+    final void CargarTabla() {
+        
+        tbContactos.setModel(model);
+        
+        while(model.getRowCount() > 0){
+            model.removeRow(0);
+        }
+        try {
+            ResultSet rs = ControllerContactos.CargarTablaContactos_Controller();
+            while(rs.next()){
+                Object[] oValues = {rs.getInt("idContacto"), rs.getString("contacto"), rs.getInt("idPersonal"), rs.getInt("idTipoContacto")};
+                model.addRow(oValues);
+            }
+        } catch(Exception e){
+        }
+        
     }
 
     /**
@@ -32,7 +67,7 @@ public class PanelContactos extends javax.swing.JPanel {
         btnFiltrar = new Controles_Personalizados.Botones.UWPButton();
         btnAgregar = new Controles_Personalizados.Botones.UWPButton();
         PanelTabla = new javax.swing.JScrollPane();
-        TbUsuariosWhite4 = new Controles_Personalizados.Tables.Table();
+        tbContactos = new Controles_Personalizados.Tables.Table();
         ScrollTabla = new Controles_Personalizados.ScrollBar.ScrollBarCustom();
 
         PanelFondo.setBackground(new java.awt.Color(231, 234, 239));
@@ -75,8 +110,8 @@ public class PanelContactos extends javax.swing.JPanel {
         PanelTabla.setVerticalScrollBar(ScrollTabla);
         PanelTabla.setWheelScrollingEnabled(false);
 
-        TbUsuariosWhite4.setBackground(new java.awt.Color(231, 234, 239));
-        TbUsuariosWhite4.setModel(new javax.swing.table.DefaultTableModel(
+        tbContactos.setBackground(new java.awt.Color(231, 234, 239));
+        tbContactos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -113,12 +148,12 @@ public class PanelContactos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        TbUsuariosWhite4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        TbUsuariosWhite4.setGridColor(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setName(""); // NOI18N
-        TbUsuariosWhite4.setSelectionBackground(new java.awt.Color(58, 50, 75));
-        TbUsuariosWhite4.setShowVerticalLines(false);
-        PanelTabla.setViewportView(TbUsuariosWhite4);
+        tbContactos.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        tbContactos.setGridColor(new java.awt.Color(58, 50, 75));
+        tbContactos.setName(""); // NOI18N
+        tbContactos.setSelectionBackground(new java.awt.Color(58, 50, 75));
+        tbContactos.setShowVerticalLines(false);
+        PanelTabla.setViewportView(tbContactos);
 
         PanelFondo.add(PanelTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 1230, 480));
 
@@ -168,9 +203,9 @@ public class PanelContactos extends javax.swing.JPanel {
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
     private javax.swing.JScrollPane PanelTabla;
     private Controles_Personalizados.ScrollBar.ScrollBarCustom ScrollTabla;
-    private Controles_Personalizados.Tables.Table TbUsuariosWhite4;
     private Controles_Personalizados.Botones.UWPButton btnAgregar;
     private Controles_Personalizados.Botones.UWPButton btnFiltrar;
     private javax.swing.JLabel lblContactos;
+    private Controles_Personalizados.Tables.Table tbContactos;
     // End of variables declaration//GEN-END:variables
 }
