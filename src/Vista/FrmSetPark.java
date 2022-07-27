@@ -124,7 +124,7 @@ public Image Logo(){
         lblParkname.setFont(new java.awt.Font("Roboto Medium", 0, 36)); // NOI18N
         lblParkname.setForeground(new java.awt.Color(253, 255, 254));
         lblParkname.setText("PARKNAME");
-        panelRound1.add(lblParkname, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 210, 40));
+        panelRound1.add(lblParkname, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 210, 40));
 
         lblParkname1.setFont(new java.awt.Font("Roboto Medium", 0, 36)); // NOI18N
         lblParkname1.setForeground(new java.awt.Color(253, 255, 254));

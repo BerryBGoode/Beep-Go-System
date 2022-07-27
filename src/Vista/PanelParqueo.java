@@ -8,17 +8,23 @@ package Vista;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import Controles_Personalizados.Tables.RenderButton;
+import javax.swing.JButton;
 /**
  *
  * @author danlo
  */
 public class PanelParqueo extends javax.swing.JPanel {
 
+    private final JButton btnUpdate = new JButton("Modificar");
+    private final JButton btnDelete = new JButton("Eliminar");
+       
     /**
      * Creates new form PanelParqueo
      */
     public PanelParqueo() {
-        initComponents();
+        initComponents();    JButton btnUpdate = new JButton("Modificar");
+    JButton btnDelete = new JButton("Eliminar");
         String[] headerpark = {"IDDetalleAcceso","Fecha", "IDAcceso", "Hora", "IDParqueo","Documento", "IDVehiculo",  "Nombres", "Apellidos", "Placa", "Color", "Nº Estacionamiento",  "Modificar", "Eliminar"};
         tbpark = new DefaultTableModel(null, headerpark);
         TbParqueosWhite.setModel(tbpark);
@@ -28,6 +34,9 @@ public class PanelParqueo extends javax.swing.JPanel {
         TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(2));
         TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(3));
         //TbParqueosWhite.removeColumn(TbParqueosWhite.getColumnModel().getColumn(11));
+        btnUpdate.setName("btnUpdate");
+        btnDelete.setName("btnDelete");
+        TbParqueosWhite.setDefaultRenderer(Object.class, new RenderButton());
     }
 
     /**
@@ -85,6 +94,11 @@ public class PanelParqueo extends javax.swing.JPanel {
         PanelTabla.setVerticalScrollBar(ScrollTabla);
         PanelTabla.setWheelScrollingEnabled(false);
 
+        TbParqueosWhite = new Controles_Personalizados.Tables.Table(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         TbParqueosWhite.setBackground(new java.awt.Color(231, 234, 239));
         TbParqueosWhite.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -128,6 +142,11 @@ public class PanelParqueo extends javax.swing.JPanel {
         TbParqueosWhite.setName(""); // NOI18N
         TbParqueosWhite.setSelectionBackground(new java.awt.Color(58, 50, 75));
         TbParqueosWhite.setShowVerticalLines(false);
+        TbParqueosWhite.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TbParqueosWhiteMouseClicked(evt);
+            }
+        });
         PanelTabla.setViewportView(TbParqueosWhite);
 
         PanelFondo.add(PanelTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 1230, 480));
@@ -171,6 +190,32 @@ public class PanelParqueo extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 
+    private void TbParqueosWhiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TbParqueosWhiteMouseClicked
+        
+        //capturar el click de los btn
+        int row = evt.getY()/TbParqueosWhite.getRowHeight();
+        int col = TbParqueosWhite.getColumnModel().getColumnIndexAtX(evt.getX());
+        try {
+           if (row < TbParqueosWhite.getRowCount() && row >= 0 && col < TbParqueosWhite.getColumnCount() && col >= 0) {
+            Object value = TbParqueosWhite.getValueAt(row, col);
+            if (value instanceof JButton) {
+                ((JButton)value).doClick();
+                JButton btn = (JButton) value;
+                FrmSetPark setPark = new FrmSetPark();
+                setPark.setVisible(true);
+                //identificar cual de los btn
+                    /*if (btn.getName().equals("btnUpdate")) {
+                    //recuperar el dato de la fila 
+                        System.out.println("a");
+                    }*/
+                }
+            } 
+        } catch (Exception e) {
+            System.out.println("Error:"+e.toString());
+        }
+        
+    }//GEN-LAST:event_TbParqueosWhiteMouseClicked
+
     void getdataPark(){
         String tablename = "vwParqueos";
         if (tbpark.getRowCount() > 0) {//si hay columnas antes de cargar 
@@ -179,7 +224,7 @@ public class PanelParqueo extends javax.swing.JPanel {
             try {
               ResultSet rs = Controlador.ControllerAccesos.getdata(tablename);  
                 while (rs.next()) {                    
-                    Object [] data = {rs.getInt("idDetalleAcceso"), rs.getDate("fecha"), rs.getInt("idAcceso"), rs.getTime("hora"), rs.getInt("idParqueo"), rs.getString("numero_carnet"), rs.getInt("idVehiculo"), rs.getString("nombre_p"), rs.getString("apellido_p"), rs.getString("placa"), rs.getString("color"), rs.getInt("numero_parqueo")};
+                    Object [] data = {rs.getInt("idDetalleAcceso"), rs.getDate("fecha"), rs.getInt("idAcceso"), rs.getTime("hora"), rs.getInt("idParqueo"), rs.getString("numero_carnet"), rs.getInt("idVehiculo"), rs.getString("nombre_p"), rs.getString("apellido_p"), rs.getString("placa"), rs.getString("color"), rs.getInt("numero_parqueo"), btnUpdate, btnDelete};
                     tbpark.addRow(data);
                 //que recupere los datos q especifico con la columname y los guarde en un object
                 }

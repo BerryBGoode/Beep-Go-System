@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/C:/Users/ferna/OneDrive/Documents/PTC_2022/Beep&amp;Go2.0/src/Controlador/ControllerVehiculos.java</file>
+            <file>file:/C:/Users/ferna/OneDrive/Documents/PTC_2022/Beep&amp;Go2.0/src/Controles_Personalizados/Tables/RenderButton.java</file>
             <file>file:/C:/Users/ferna/OneDrive/Documents/PTC_2022/Beep&amp;Go2.0/src/Vista/FrmConfigPark.java</file>
             <file>file:/C:/Users/ferna/OneDrive/Documents/PTC_2022/Beep&amp;Go2.0/src/Vista/PanelParqueo.java</file>
-=======
-            <file>file:/C:/Users/50377/Documents/GitHub/Beep-Go-System/src/Vista/FrmPersonal_AggVehiculo.java</file>
-            <file>file:/C:/Users/50377/Documents/GitHub/Beep-Go-System/src/Controlador/ControllerVehiculos.java</file>
-            <file>file:/C:/Users/50377/Documents/GitHub/Beep-Go-System/src/Vista/FrmAgg_Vehiculos.java</file>
-            <file>file:/C:/Users/50377/Documents/GitHub/Beep-Go-System/src/Vista/PanelVehiculos.java</file>
-            <file>file:/C:/Users/50377/Documents/GitHub/Beep-Go-System/src/Modelo/ModelVehiculos.java</file>
->>>>>>> f451ce7466a7d31a4114b63a09e4c34049d468e1
+            <file>file:/C:/Users/ferna/OneDrive/Documents/PTC_2022/Beep&amp;Go2.0/src/Vista/FrmSetPark.java</file>
         </group>
     </open-files>
 </project-private>
