@@ -9,6 +9,8 @@ import Controlador.ControllerContactos;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +29,7 @@ public class PanelContactos extends javax.swing.JPanel {
         String[] headerContactos = {"Id Contacto", "contacto", "id Personal", "id TipoContacto", "Modificar", "Eliminar"};
         model = new DefaultTableModel(null, headerContactos);
         CargarTabla();
+        CenterTableContent();
     }
     
     DefaultTableModel model;
@@ -51,6 +54,18 @@ public class PanelContactos extends javax.swing.JPanel {
         } catch(Exception e){
         }
         
+    }
+    
+    final void CenterTableContent() {
+        DefaultTableCellRenderer centerRende = new DefaultTableCellRenderer();
+        centerRende.setHorizontalAlignment(JLabel.CENTER);
+        tbContactos.getColumnModel().getColumn(0).setCellRenderer(centerRende);
+        tbContactos.getColumnModel().getColumn(1).setCellRenderer(centerRende);
+        tbContactos.getColumnModel().getColumn(2).setCellRenderer(centerRende);
+        tbContactos.getColumnModel().getColumn(3).setCellRenderer(centerRende);
+        tbContactos.getColumnModel().getColumn(4).setCellRenderer(centerRende);
+        tbContactos.getColumnModel().getColumn(5).setCellRenderer(centerRende);
+
     }
 
     /**
