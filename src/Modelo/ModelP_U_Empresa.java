@@ -44,7 +44,7 @@ public class ModelP_U_Empresa {
             ps.setString(4, NIT);
             ps.setString(5, CNR);
             ps.setBytes(6, logo);
-            ps.executeUpdate();
+            ps.execute();
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al realizar el proceso" + e.toString(),"Proceso incompleto",JOptionPane.ERROR_MESSAGE);

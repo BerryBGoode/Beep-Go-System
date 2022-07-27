@@ -184,7 +184,6 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 createFile();
                 writeFile();
                 JOptionPane.showMessageDialog(null, "Se guardo un archivo con\n los datos de la conexón", "Archivo guardado", JOptionPane.INFORMATION_MESSAGE);
-<<<<<<< HEAD
                 if (verficarpu.checkEnterprise()==false) {
                     FrmP_U_Empresa cargarempresa=new FrmP_U_Empresa();
                     cargarempresa.setVisible(true);
@@ -196,7 +195,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
                         FrmP_U_Usuario cargarusuario=new FrmP_U_Usuario();
                         cargarusuario.setVisible(true);
                     }
-=======
+
                 
                 ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
                 boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
@@ -212,7 +211,6 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     }
                 }
                 
->>>>>>> 5fdbf8385c16705f0fc03a598fb81b4113d60854
             } else {
                 /*esto porque me cerraba el frm al dale ok al msg anterior */
                 int conf = JOptionPane.YES_NO_OPTION;                
@@ -353,15 +351,9 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     ControllerConfig.setPassword(config.data[3]);
                     
                     ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
-<<<<<<< HEAD
                     ControllerP_U_Personal PrimerPersonal = new ControllerP_U_Personal();
                     ControllerP_U_Usuarios primerUsuarios=new ControllerP_U_Usuarios();
-
-=======
-                    boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
-                    ControllerP_U_Personal primerPersonal=new ControllerP_U_Personal();
                     
->>>>>>> 5fdbf8385c16705f0fc03a598fb81b4113d60854
                     //lee los valores y los asigna a los attr
                     if (VistapEmpresa.checkEnterprise() == false) {
                         FrmP_U_Empresa emp = new FrmP_U_Empresa();
@@ -381,25 +373,21 @@ public class FrmConfigConection extends javax.swing.JFrame {
                         //por el momento abre hacia el login
                         /////login.setVisible(true);                             
                         //no pongo q cierre el frm de conf, porque no ha abierto en este momento        
-<<<<<<< HEAD
+
                     }
                     else if (VistapEmpresa.checkEnterprise()==true&&PrimerPersonal.checkcontrollerPersonal()==false) {
                             FrmP_U_Personal cargarpersonal=new FrmP_U_Personal();
                             cargarpersonal.setVisible(true);
                 
                     }
-                    else if (PrimerPersonal.checkcontrollerPersonal()==true&&primerUsuarios.checkControllerUsuario()==true&&VistapEmpresa.checkEnterprise()==false) {
+                    else if (PrimerPersonal.checkcontrollerPersonal()==true&&primerUsuarios.checkControllerUsuario()==true&&VistapEmpresa.checkEnterprise()==true) {
                         FrmLogin iniciar=new FrmLogin();
                         iniciar.setVisible(true);
                     }
                     /*else if(primerPersonal==true){
                             FrmP_U_Usuario pu=new FrmP_U_Usuario();
                             pu.setVisible(true);
-                    }*/ else {
-=======
-                    } 
-                    else if (primeraempresa==true) {//Comienzo del priemer uso
-                            login.setVisible(true);
+                    }*/
                             //FrmP_U_Personal pe=new FrmP_U_Personal();
                             //pe.setVisible(true);
                             
@@ -408,10 +396,9 @@ public class FrmConfigConection extends javax.swing.JFrame {
                             //si existen, pasar al login 
                             //si no exsiten la primer uso
                             
-                        }
+                        
                     
                     else{
->>>>>>> 5fdbf8385c16705f0fc03a598fb81b4113d60854
                         config.setVisible(true);//para volver a config, porque salio algo mal                        
                         config.deleteFile();
                     }
