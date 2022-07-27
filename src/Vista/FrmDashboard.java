@@ -236,12 +236,12 @@ public Image Logo(){
 
         lblNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(42, 36, 56));
-        lblNombre.setText("Daniel L.");
+        lblNombre.setText("Usuario");
         PanelDatosUs.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 7, -1, 30));
 
         lblTipo.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         lblTipo.setForeground(new java.awt.Color(42, 36, 56));
-        lblTipo.setText("Administrador");
+        lblTipo.setText("Tipo usuario");
         PanelDatosUs.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         lblUsuarioDark.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/usuario-blanco.png"))); // NOI18N

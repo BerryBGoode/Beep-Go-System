@@ -7,59 +7,91 @@ import Modelo.ModelVehiculos;
 
 /**
  *
- * @author danlo
+ * @author Eam
  */
 public class ControllerVehiculos {
     
-    public static int idvehiculo;
-    public static int idpersonal;
-    public static String placa;
-    public static String color;
+    private int idvehiculo;
+    private int idpersonal;
+    private String placa;
+    private String color;
 
-    public static int getIdpersonal() {
+    public int getIdpersonal() {
         return idpersonal;
     }
 
-    public static void setIdpersonal(int idpersonal) {
-        ControllerVehiculos.idpersonal = idpersonal;
+    public void setIdpersonal(int idpersonal) {
+        this.idpersonal = idpersonal;
     }
 
-    public static String getPlaca() {
+    public String getPlaca() {
         return placa;
     }
 
-    public static void setPlaca(String placa) {
-        ControllerVehiculos.placa = placa;
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
-    public static String getColor() {
+    public String getColor() {
         return color;
     }
 
-    public static void setColor(String color) {
-        ControllerVehiculos.color = color;
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public ControllerVehiculos(int idpersonal, String placa, String color) {
+        this.idpersonal = idpersonal;
+        this.placa = placa;
+        this.color = color;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    
+    public ControllerVehiculos(int idvehiculo, int idpersonal, String placa, String color) {
+        this.idvehiculo = idvehiculo;
+        this.idpersonal = idpersonal;
+        this.placa = placa;
+        this.color = color;
     }
     
+    /**
+     * 
+     * @return 
+     */
+
+    public ControllerVehiculos(int idvehiculo) {
+        this.idvehiculo = idvehiculo;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+
     public ControllerVehiculos() {
     }
-    
+
     public static ResultSet CargarTablaVehiculos_Controller() {
-        return ModelVehiculos.CargarTabla(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.CargarTabla();
     }
     
     public static ResultSet CargarCMBPersonal_Controller() {
-        return ModelVehiculos.CargarCMBPersonal(ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+        return ModelVehiculos.CargarCMBPersonal();
     }
     
-    public static int RegistrarVehiculo_Controller() {
-        return ModelVehiculos.RegistrarVehiculo(idpersonal, placa, color, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+    public int RegistrarVehiculo_Controller() {
+        return ModelVehiculos.RegistrarVehiculo(idpersonal, placa, color);
     }
     
-    public static boolean ActualizarVehiculo_Controller() {
-        return ModelVehiculos.ActualizarVehiculo(idvehiculo, idpersonal, placa, color, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+    public boolean ActualizarVehiculo_Controller() {
+        return ModelVehiculos.ActualizarVehiculo(idvehiculo, idpersonal, placa, color);
     }
     
-    public static boolean EliminarVehiculo_Controller() {
-        return ModelVehiculos.EliminarVehiculo(idvehiculo, ControllerConfig.ip, ControllerConfig.host, ControllerConfig.username, ControllerConfig.password);
+    public boolean EliminarVehiculo_Controller() {
+        return ModelVehiculos.EliminarVehiculo(idvehiculo);
     }
 }

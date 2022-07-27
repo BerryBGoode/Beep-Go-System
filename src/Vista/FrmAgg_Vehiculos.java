@@ -7,8 +7,10 @@ import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -46,6 +48,7 @@ public Image Logo(){
         btnContinuar = new Controles_Personalizados.Botones.ButtonGradient();
         btnCerrar = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JLabel();
+        cmbPersonal = new Controles_Personalizados.ComboBox.combobox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -76,7 +79,7 @@ public Image Logo(){
         txtColor.setLineColor(new java.awt.Color(253, 255, 254));
         txtColor.setSelectedTextColor(new java.awt.Color(58, 50, 75));
         txtColor.setSelectionColor(new java.awt.Color(253, 255, 254));
-        panelRound1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 310, 70));
+        panelRound1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 310, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Car.png"))); // NOI18N
         panelRound1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, -1, 390));
@@ -112,11 +115,20 @@ public Image Logo(){
         });
         panelRound1.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, -1, -1));
 
+        cmbPersonal.setBackground(new java.awt.Color(58, 50, 75));
+        cmbPersonal.setForeground(new java.awt.Color(42, 36, 56));
+        cmbPersonal.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        cmbPersonal.setLabeText("ID - Personal");
+        cmbPersonal.setLineColor(new java.awt.Color(253, 255, 254));
+        panelRound1.add(cmbPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 310, 80));
+
         getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    ControllerVehiculos objVehiculos = new ControllerVehiculos();
+    
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -125,6 +137,7 @@ public Image Logo(){
 
     private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
         this.dispose();
+        PanelOpcionesPersonal.showinter = 0;
     }//GEN-LAST:event_btnCerrarMousePressed
 
     private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
@@ -136,10 +149,9 @@ public Image Logo(){
         if (txtPlaca.getText().trim().isEmpty() || txtColor.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Existen campos vacíos, favor llenar todos los campos", "Campos vacíos", JOptionPane.ERROR_MESSAGE);
         } else {
-            ControllerVehiculos.placa = txtPlaca.getText();
-            ControllerVehiculos.color = txtColor.getText();
+            objVehiculos = new ControllerVehiculos(cmbPersonal.getSelectedIndex(), txtPlaca.getText(), txtColor.getText());
             //ControllerVehiculos.idpersonal = cmbPersonal.getSelectedItem();
-            int respuesta = ControllerVehiculos.RegistrarVehiculo_Controller();
+            int respuesta = objVehiculos.RegistrarVehiculo_Controller();
             if (respuesta == 1) {
                 JOptionPane.showMessageDialog(null, "Vehiculo registrado con exito", "Proceso de insersion", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -150,9 +162,8 @@ public Image Logo(){
     
     void ActualizarVehiculo() {
         //ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
-        ControllerVehiculos.placa = txtPlaca.getText();
-        ControllerVehiculos.color = txtColor.getText();
-        boolean respuesta = ControllerVehiculos.ActualizarVehiculo_Controller();
+        //objVehiculos = new ControllerVehiculos(lblID.getText(), cmbPersonal.getSelectedIndex(), txtPlaca.getText(), txtColor.getText());
+        boolean respuesta = objVehiculos.ActualizarVehiculo_Controller();
         if (respuesta == true) {
             JOptionPane.showMessageDialog(null, "Se ha actualizado el registro", "Proceso de actualizacion", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -165,7 +176,7 @@ public Image Logo(){
         JOptionPane.showConfirmDialog(this, "¿Estas seguro que quieres eliminar el registro?", "Confirmacion de eliminacion", confirmacion);
         if(confirmacion == JOptionPane.YES_OPTION) {
             //ControllerVehiculos.idvehiculo = Integer.parseInt(lblIDvehiculo.getText());
-            boolean respuesta = ControllerVehiculos.EliminarVehiculo_Controller();
+            boolean respuesta = objVehiculos.EliminarVehiculo_Controller();
             if(respuesta == true) {
                 JOptionPane.showMessageDialog(null, "Registro eliminado con exito", "Proceso de eliminacion", JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -214,6 +225,7 @@ public Image Logo(){
     private javax.swing.JLabel btnCerrar;
     private Controles_Personalizados.Botones.ButtonGradient btnContinuar;
     private javax.swing.JLabel btnMinimizar;
+    private Controles_Personalizados.ComboBox.combobox cmbPersonal;
     private javax.swing.JLabel jLabel1;
     private Controles_Personalizados.Paneles.PanelRound panelRound1;
     private Controles_Personalizados.textfields.TextField txtColor;

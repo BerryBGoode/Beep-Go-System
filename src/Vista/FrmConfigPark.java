@@ -45,12 +45,8 @@ public Image Logo(){
     private void initComponents() {
 
         panelRound1 = new Controles_Personalizados.Paneles.PanelRound();
-        jLabel1 = new javax.swing.JLabel();
-        txtUsuario = new Controles_Personalizados.textfields.TextField();
-        panelPark1 = new Controles_Personalizados.Paneles.PanelRound();
-        btnPark1 = new javax.swing.JLabel();
-        panelPark2 = new Controles_Personalizados.Paneles.PanelRound();
-        btnPark2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnContinuar = new Controles_Personalizados.Botones.ButtonGradient();
         panelPark3 = new Controles_Personalizados.Paneles.PanelRound();
         btnPark3 = new javax.swing.JLabel();
         panelPark4 = new Controles_Personalizados.Paneles.PanelRound();
@@ -79,14 +75,20 @@ public Image Logo(){
         btnPark14 = new javax.swing.JLabel();
         panelPark13 = new Controles_Personalizados.Paneles.PanelRound();
         btnPark13 = new javax.swing.JLabel();
-        btnContinuar = new Controles_Personalizados.Botones.ButtonGradient();
-        btnCerrar = new javax.swing.JLabel();
+        panelPark2 = new Controles_Personalizados.Paneles.PanelRound();
+        btnPark2 = new javax.swing.JLabel();
+        panelPark1 = new Controles_Personalizados.Paneles.PanelRound();
+        btnPark1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JLabel();
+        panelPark17 = new Controles_Personalizados.Paneles.PanelRound();
+        btnPark17 = new javax.swing.JLabel();
+        panelPark18 = new Controles_Personalizados.Paneles.PanelRound();
+        btnPark18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1099, 578));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -97,47 +99,21 @@ public Image Logo(){
         panelRound1.setBackground(new java.awt.Color(58, 50, 75));
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/TextoEstacionamiento.png"))); // NOI18N
-        panelRound1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Parking-amico.png"))); // NOI18N
+        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 70, -1, -1));
 
-        txtUsuario.setBackground(new java.awt.Color(58, 50, 75));
-        txtUsuario.setForeground(new java.awt.Color(253, 255, 254));
-        txtUsuario.setCaretColor(new java.awt.Color(253, 255, 254));
-        txtUsuario.setDisabledTextColor(new java.awt.Color(253, 255, 254));
-        txtUsuario.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtUsuario.setLabelText("Parqueos disponibles");
-        txtUsuario.setLineColor(new java.awt.Color(253, 255, 254));
-        txtUsuario.setSelectedTextColor(new java.awt.Color(58, 50, 75));
-        txtUsuario.setSelectionColor(new java.awt.Color(253, 255, 254));
-        panelRound1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 310, 70));
-
-        panelPark1.setBackground(new java.awt.Color(254, 254, 254));
-        panelPark1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnPark1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
-        btnPark1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPark1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPark1MouseClicked(evt);
+        btnContinuar.setBackground(new java.awt.Color(253, 255, 254));
+        btnContinuar.setForeground(new java.awt.Color(58, 50, 75));
+        btnContinuar.setText("Continuar");
+        btnContinuar.setColor1(new java.awt.Color(253, 255, 254));
+        btnContinuar.setColor2(new java.awt.Color(253, 255, 254));
+        btnContinuar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContinuarActionPerformed(evt);
             }
         });
-        panelPark1.add(btnPark1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
-
-        panelRound1.add(panelPark1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 60, 60));
-
-        panelPark2.setBackground(new java.awt.Color(254, 254, 254));
-        panelPark2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnPark2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
-        btnPark2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPark2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPark2MouseClicked(evt);
-            }
-        });
-        panelPark2.add(btnPark2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
-
-        panelRound1.add(panelPark2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 60, 60));
+        panelRound1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, 170, -1));
 
         panelPark3.setBackground(new java.awt.Color(254, 254, 254));
         panelPark3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -151,7 +127,7 @@ public Image Logo(){
         });
         panelPark3.add(btnPark3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, 60, 60));
+        panelRound1.add(panelPark3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 60, 60));
 
         panelPark4.setBackground(new java.awt.Color(254, 254, 254));
         panelPark4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -165,7 +141,7 @@ public Image Logo(){
         });
         panelPark4.add(btnPark4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 60, 60));
+        panelRound1.add(panelPark4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 60, 60));
 
         panelPark11.setBackground(new java.awt.Color(254, 254, 254));
         panelPark11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -179,7 +155,7 @@ public Image Logo(){
         });
         panelPark11.add(btnPark11, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 60, 60));
+        panelRound1.add(panelPark11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 60, 60));
 
         panelPark12.setBackground(new java.awt.Color(254, 254, 254));
         panelPark12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -193,7 +169,7 @@ public Image Logo(){
         });
         panelPark12.add(btnPark12, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 430, 60, 60));
+        panelRound1.add(panelPark12, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 60, 60));
 
         panelPark10.setBackground(new java.awt.Color(254, 254, 254));
         panelPark10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -207,7 +183,7 @@ public Image Logo(){
         });
         panelPark10.add(btnPark10, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 60, 60));
+        panelRound1.add(panelPark10, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, 60, 60));
 
         panelPark9.setBackground(new java.awt.Color(254, 254, 254));
         panelPark9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -221,7 +197,7 @@ public Image Logo(){
         });
         panelPark9.add(btnPark9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 60, 60));
+        panelRound1.add(panelPark9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 60, 60));
 
         panelPark8.setBackground(new java.awt.Color(254, 254, 254));
         panelPark8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -235,7 +211,7 @@ public Image Logo(){
         });
         panelPark8.add(btnPark8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 60, 60));
+        panelRound1.add(panelPark8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 60, 60));
 
         panelPark7.setBackground(new java.awt.Color(254, 254, 254));
         panelPark7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -249,7 +225,7 @@ public Image Logo(){
         });
         panelPark7.add(btnPark7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, 60, 60));
+        panelRound1.add(panelPark7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 60, 60));
 
         panelPark6.setBackground(new java.awt.Color(254, 254, 254));
         panelPark6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -263,7 +239,7 @@ public Image Logo(){
         });
         panelPark6.add(btnPark6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 60, 60));
+        panelRound1.add(panelPark6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, 60, 60));
 
         panelPark5.setBackground(new java.awt.Color(254, 254, 254));
         panelPark5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -277,7 +253,7 @@ public Image Logo(){
         });
         panelPark5.add(btnPark5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 330, 60, 60));
+        panelRound1.add(panelPark5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 60, 60));
 
         panelPark16.setBackground(new java.awt.Color(254, 254, 254));
         panelPark16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -291,7 +267,7 @@ public Image Logo(){
         });
         panelPark16.add(btnPark16, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark16, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 430, 60, 60));
+        panelRound1.add(panelPark16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 460, 60, 60));
 
         panelPark15.setBackground(new java.awt.Color(254, 254, 254));
         panelPark15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -305,7 +281,7 @@ public Image Logo(){
         });
         panelPark15.add(btnPark15, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark15, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, 60, 60));
+        panelRound1.add(panelPark15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 60, 60));
 
         panelPark14.setBackground(new java.awt.Color(254, 254, 254));
         panelPark14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -319,7 +295,7 @@ public Image Logo(){
         });
         panelPark14.add(btnPark14, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark14, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, 60, 60));
+        panelRound1.add(panelPark14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 60, 60));
 
         panelPark13.setBackground(new java.awt.Color(254, 254, 254));
         panelPark13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -333,20 +309,47 @@ public Image Logo(){
         });
         panelPark13.add(btnPark13, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        panelRound1.add(panelPark13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 430, 60, 60));
+        panelRound1.add(panelPark13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 60, 60));
 
-        btnContinuar.setBackground(new java.awt.Color(253, 255, 254));
-        btnContinuar.setForeground(new java.awt.Color(58, 50, 75));
-        btnContinuar.setText("Continuar");
-        btnContinuar.setColor1(new java.awt.Color(253, 255, 254));
-        btnContinuar.setColor2(new java.awt.Color(253, 255, 254));
-        btnContinuar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        btnContinuar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContinuarActionPerformed(evt);
+        panelPark2.setBackground(new java.awt.Color(254, 254, 254));
+        panelPark2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnPark2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
+        btnPark2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPark2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPark2MouseClicked(evt);
             }
         });
-        panelRound1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 440, 150, -1));
+        panelPark2.add(btnPark2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
+
+        panelRound1.add(panelPark2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 60, 60));
+
+        panelPark1.setBackground(new java.awt.Color(254, 254, 254));
+        panelPark1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnPark1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
+        btnPark1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPark1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPark1MouseClicked(evt);
+            }
+        });
+        panelPark1.add(btnPark1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
+
+        panelRound1.add(panelPark1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 60, 60));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/TextoEstacionamiento.png"))); // NOI18N
+        panelRound1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, -1, -1));
+
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
+        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarMouseClicked(evt);
+            }
+        });
+        panelRound1.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 11, -1, -1));
 
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/CerrarLogin.png"))); // NOI18N
         btnCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -357,19 +360,35 @@ public Image Logo(){
         });
         panelRound1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
-        btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+        panelPark17.setBackground(new java.awt.Color(254, 254, 254));
+        panelPark17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnPark17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
+        btnPark17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPark17.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMinimizarMouseClicked(evt);
+                btnPark17MouseClicked(evt);
             }
         });
-        panelRound1.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, -1, -1));
+        panelPark17.add(btnPark17, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Parking-amico.png"))); // NOI18N
-        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, -1, -1));
+        panelRound1.add(panelPark17, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 60, 60));
 
-        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 580));
+        panelPark18.setBackground(new java.awt.Color(254, 254, 254));
+        panelPark18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnPark18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/vehiculo-park.png"))); // NOI18N
+        btnPark18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPark18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPark18MouseClicked(evt);
+            }
+        });
+        panelPark18.add(btnPark18, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 10, -1, -1));
+
+        panelRound1.add(panelPark18, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 460, 60, 60));
+
+        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1108, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -379,13 +398,7 @@ public Image Logo(){
         this.dispose();
         park.dispose();
     }//GEN-LAST:event_btnContinuarActionPerformed
-    
-    private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
-        this.dispose();
-        PanelOpcionesPersonal.showinter = 0;
-        park.dispose();
-    }//GEN-LAST:event_btnCerrarMousePressed
-//PARA GUARDAR LOS ESTACIONAMIENTOS OCUPADOS, SE HARÁ POR MEDIO DE UNA CONSULTA
+    //PARA GUARDAR LOS ESTACIONAMIENTOS OCUPADOS, SE HARÁ POR MEDIO DE UNA CONSULTA
     private void btnPark1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark1MouseClicked
         modifPanelPark(panelPark1, "PARQUEO 1");        
     }//GEN-LAST:event_btnPark1MouseClicked
@@ -440,10 +453,6 @@ public Image Logo(){
         modifPanelPark(panelPark5, "PARQUEO 5");
     }//GEN-LAST:event_btnPark5MouseClicked
 
-    private void btnPark16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark16MouseClicked
-        modifPanelPark(panelPark16, "PARQUEO 16");
-    }//GEN-LAST:event_btnPark16MouseClicked
-
     private void btnPark15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark15MouseClicked
         modifPanelPark(panelPark15, "PARQUEO 15");
     }//GEN-LAST:event_btnPark15MouseClicked
@@ -456,10 +465,27 @@ public Image Logo(){
         modifPanelPark(panelPark13, "PARQUEO 13");
     }//GEN-LAST:event_btnPark13MouseClicked
 
+    private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
+        this.dispose();
+        PanelOpcionesPersonal.showinter = 0;
+        park.dispose();
+    }//GEN-LAST:event_btnCerrarMousePressed
+
     private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
-        // TODO add your handling code here:
-        this.setExtendedState(JFrame.ICONIFIED);
+        this.setExtendedState(ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
+
+    private void btnPark16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark16MouseClicked
+        modifPanelPark(panelPark16, "PARQUEO 16");
+    }//GEN-LAST:event_btnPark16MouseClicked
+
+    private void btnPark17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark17MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPark17MouseClicked
+
+    private void btnPark18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPark18MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPark18MouseClicked
        
     
     FrmSetPark park = new FrmSetPark();
@@ -470,7 +496,7 @@ public Image Logo(){
         if (park.isVisible()) {
             park.toFront();
             park.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Se cerro el formulario anterior, debido a que no puede tenerlos al mismo tiempo abiertos", "Formulario cerraro", 0);
+            JOptionPane.showMessageDialog(null, "Se cerro el formulario anterior,\ndebido a que no puede tenerlos \nal mismo tiempo abiertos", "Formulario cerrado", JOptionPane.WARNING_MESSAGE);
         }else{
             park.setVisible(true);
             FrmSetPark.setParkname(parkname);
@@ -529,6 +555,8 @@ public Image Logo(){
     private javax.swing.JLabel btnPark14;
     private javax.swing.JLabel btnPark15;
     private javax.swing.JLabel btnPark16;
+    private javax.swing.JLabel btnPark17;
+    private javax.swing.JLabel btnPark18;
     private javax.swing.JLabel btnPark2;
     private javax.swing.JLabel btnPark3;
     private javax.swing.JLabel btnPark4;
@@ -547,6 +575,8 @@ public Image Logo(){
     private Controles_Personalizados.Paneles.PanelRound panelPark14;
     private Controles_Personalizados.Paneles.PanelRound panelPark15;
     private Controles_Personalizados.Paneles.PanelRound panelPark16;
+    private Controles_Personalizados.Paneles.PanelRound panelPark17;
+    private Controles_Personalizados.Paneles.PanelRound panelPark18;
     private Controles_Personalizados.Paneles.PanelRound panelPark2;
     private Controles_Personalizados.Paneles.PanelRound panelPark3;
     private Controles_Personalizados.Paneles.PanelRound panelPark4;
@@ -556,6 +586,5 @@ public Image Logo(){
     private Controles_Personalizados.Paneles.PanelRound panelPark8;
     private Controles_Personalizados.Paneles.PanelRound panelPark9;
     private Controles_Personalizados.Paneles.PanelRound panelRound1;
-    private Controles_Personalizados.textfields.TextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

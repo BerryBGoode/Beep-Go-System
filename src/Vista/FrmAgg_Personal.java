@@ -13,7 +13,7 @@ import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import Controlador.*;
 /**
  *
  * @author ferna
@@ -230,7 +230,7 @@ public class FrmAgg_Personal extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        this.dispose();        
+        this.dispose();             
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
