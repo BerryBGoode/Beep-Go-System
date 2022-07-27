@@ -19,16 +19,27 @@ import javax.swing.JOptionPane;
 public class ModelP_U_Personal {
     PreparedStatement ps;
     Connection con;
-    public ResultSet cargarTipoP(){
+    public ResultSet cargarTipD(){
         try {
             con=ModelConexion.getConnection();
-            String query="SELECT * FROM tbTipoPersonal";
+            String query="SELECT * FROM tbTipoDocumento";
             ps=con.prepareStatement(query);
             ResultSet rs=ps.executeQuery();
             return rs;    
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al cargar la lista "+e.toString());
             return null;
+        }
+    }
+        public boolean checkPersonal(){
+    
+        try {
+            con = ModelConexion.getConnection();
+            ps = con.prepareStatement("SELECT * FROM tbPersonal");            
+            ResultSet rs = ps.executeQuery();            
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
         }
     }
     public ResultSet cargarGeneroP(){
@@ -43,24 +54,27 @@ public class ModelP_U_Personal {
             return null;
         }
     }
-    public boolean IngresarPPersonal(String nombrep,String apellidop,Date fecha, String Correo,String direccion,String DUI,int idtipop,int genero, byte[] logo){
+    public boolean IngresarPPersonal(String nombrep,String apellidop,String fecha, String Correo,String direccion,String DUI,int genero,int idtipod ){
         try {
+            int idempresa=1;
+            int idtipopersonal=2;
             con=ModelConexion.getConnection();
-            String query="INSERT INTO tbPersonal VALUES (?,?,?,?,?,?,?,?,?)";
+            String query="INSERT INTO tbPersonal VALUES (?,?,?,?,?,?,?,?,?,?)";
             ps=con.prepareStatement(query); 
             ps.setString(1, nombrep);
             ps.setString(2, apellidop);
-            ps.setDate(3, fecha);
+            ps.setString(3, fecha);
             ps.setString(4, Correo);
             ps.setString(5, direccion);
             ps.setString(6, DUI);
-            ps.setInt(7, idtipop);
-            ps.setInt(8, genero);
-            ps.setBytes(9, logo);
+            ps.setInt(7, idtipod);
+            ps.setInt(8, idtipopersonal);
+            ps.setInt(9, genero);
+            ps.setInt(10, idempresa);
             ps.execute();
             return  true;
         } catch (SQLException e) {
-             JOptionPane.showMessageDialog(null, "Error al realizaR el proceso","Error al agregar",JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Error al realizar el proceso" + e.toString(),"Proceso incompleto",JOptionPane.ERROR_MESSAGE);
              return false;
         }
     }

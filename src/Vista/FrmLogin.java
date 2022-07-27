@@ -5,12 +5,17 @@
  */
 package Vista;
 
+import Controlador.ControllerLogin;
 import com.sun.awt.AWTUtilities;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +33,11 @@ public class FrmLogin extends javax.swing.JFrame {
          AWTUtilities. setWindowShape(this, forma);
          this.setIconImage(Logo());
     }
+    
+    public int ID;
+    private String nombre;
+    private String tipo; 
+    
 public Image Logo(){
     Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
     return retvalue;
@@ -44,8 +54,8 @@ public Image Logo(){
         PanelFondo = new Controles_Personalizados.Paneles.PanelRound();
         PanelContenedorCampos = new Controles_Personalizados.Paneles.PanelRound();
         LogoLogin = new javax.swing.JLabel();
-        txtcontra = new Controles_Personalizados.textfields.PasswordField();
-        txtusuario = new Controles_Personalizados.textfields.TextField();
+        txtContra = new Controles_Personalizados.textfields.PasswordField();
+        txtUsuario = new Controles_Personalizados.textfields.TextField();
         btnConocerMas = new Controles_Personalizados.Botones.ButtonGradient();
         btnLogin = new Controles_Personalizados.Botones.ButtonGradient();
         lblOlvide = new javax.swing.JLabel();
@@ -76,24 +86,40 @@ public Image Logo(){
         LogoLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/LogoB&GLogin.png"))); // NOI18N
         PanelContenedorCampos.add(LogoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        txtcontra.setBackground(new java.awt.Color(254, 254, 254));
-        txtcontra.setForeground(new java.awt.Color(42, 36, 56));
-        txtcontra.setCaretColor(new java.awt.Color(42, 36, 56));
-        txtcontra.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtcontra.setLabelText("Contraseña");
-        txtcontra.setLineColor(new java.awt.Color(42, 36, 56));
-        txtcontra.setSelectionColor(new java.awt.Color(58, 50, 75));
-        txtcontra.setShowAndHide(true);
-        PanelContenedorCampos.add(txtcontra, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 450, 70));
+        txtContra.setBackground(new java.awt.Color(254, 254, 254));
+        txtContra.setForeground(new java.awt.Color(42, 36, 56));
+        txtContra.setCaretColor(new java.awt.Color(42, 36, 56));
+        txtContra.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txtContra.setLabelText("Contraseña");
+        txtContra.setLineColor(new java.awt.Color(42, 36, 56));
+        txtContra.setSelectionColor(new java.awt.Color(58, 50, 75));
+        txtContra.setShowAndHide(true);
+        txtContra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContraKeyTyped(evt);
+            }
+        });
+        PanelContenedorCampos.add(txtContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 450, 70));
 
-        txtusuario.setBackground(new java.awt.Color(254, 254, 254));
-        txtusuario.setForeground(new java.awt.Color(42, 36, 56));
-        txtusuario.setCaretColor(new java.awt.Color(42, 36, 56));
-        txtusuario.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtusuario.setLabelText("Usuario");
-        txtusuario.setLineColor(new java.awt.Color(42, 36, 56));
-        txtusuario.setSelectionColor(new java.awt.Color(58, 50, 75));
-        PanelContenedorCampos.add(txtusuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 450, 70));
+        txtUsuario.setBackground(new java.awt.Color(254, 254, 254));
+        txtUsuario.setForeground(new java.awt.Color(42, 36, 56));
+        txtUsuario.setCaretColor(new java.awt.Color(42, 36, 56));
+        txtUsuario.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txtUsuario.setLabelText("Usuario");
+        txtUsuario.setLineColor(new java.awt.Color(42, 36, 56));
+        txtUsuario.setSelectionColor(new java.awt.Color(58, 50, 75));
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
+        PanelContenedorCampos.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 450, 70));
 
         btnConocerMas.setBackground(new java.awt.Color(254, 254, 254));
         btnConocerMas.setForeground(new java.awt.Color(42, 36, 56));
@@ -155,13 +181,51 @@ public Image Logo(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    void Login(){
+        if (txtUsuario.getText().equals("") || txtContra.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Existen campos vacios", "Error de procesamiento", JOptionPane.WARNING_MESSAGE);
+        } else {
+            ControllerLogin objc = new ControllerLogin();
+            ControllerLogin.usuario = txtUsuario.getText();
+            String contra = ValidacionesSistema.ValidacionesBeep_Go.EncriptarContra(String.valueOf(txtContra.getPassword()));
+
+            objc.contraseña = contra;
+
+            int respuesta = objc.validarLoginC();
+
+            if (respuesta == 1) {
+                CargarDatos();
+                FrmDashboard rec = new FrmDashboard(nombre, tipo);
+                rec.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+            }
+        }
+    }
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        FrmDashboard rec = new FrmDashboard();
-        rec.setVisible(true);
-        this.dispose();
+        Login();
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    void CargarDatos() {
+        ControllerLogin objc = new ControllerLogin();
+        ResultSet rs;
+        rs = objc.CapturarDatosController(txtUsuario.getText());
+        ArrayList<String> datos = new ArrayList<String>();
+
+        try {
+            if (rs.next()) {
+                ID = rs.getInt("idUsuario");
+                nombre = rs.getString("nombre_usuario");
+                tipo = rs.getString("tipo_usuario");
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    
     private void lblOlvideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOlvideMouseClicked
         // TODO add your handling code here:
         MenuRecu rec = new MenuRecu();
@@ -177,6 +241,47 @@ public Image Logo(){
         // TODO add your handling code here:
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            Login();
+        }
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtContraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            Login();
+        }
+    }//GEN-LAST:event_txtContraKeyPressed
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(txtUsuario.getText().length() >= 15)
+        {
+            evt.consume();
+        }else{
+            if(txtUsuario.getText().equals("") && car == 95){
+                evt.consume();
+            }else if(txtUsuario.getText().contains("_") && car == 95){
+                evt.consume();
+            }else{
+                ValidacionesSistema.ValidacionesBeep_Go.SinEspacios(evt);
+                ValidacionesSistema.ValidacionesBeep_Go.SoloLetrasNumerosGuionBajo(evt);
+            }
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void txtContraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraKeyTyped
+        // TODO add your handling code here:
+        if(txtContra.getText().length() >= 20){
+            evt.consume();
+        }else{
+            ValidacionesSistema.ValidacionesBeep_Go.SinEspacios(evt);
+        }
+    }//GEN-LAST:event_txtContraKeyTyped
 
     /**
      * @param args the command line arguments
@@ -225,7 +330,7 @@ public Image Logo(){
     private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel lblOlvide;
     private javax.swing.JLabel textologin;
-    private Controles_Personalizados.textfields.PasswordField txtcontra;
-    private Controles_Personalizados.textfields.TextField txtusuario;
+    private Controles_Personalizados.textfields.PasswordField txtContra;
+    private Controles_Personalizados.textfields.TextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

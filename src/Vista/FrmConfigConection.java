@@ -28,7 +28,10 @@ public class FrmConfigConection extends javax.swing.JFrame {
     File file;
     final String filename = "configConection.txt";
     public String[] data = new String[5];
-    
+    ControllerP_U_Empresa verficarpu = new ControllerP_U_Empresa();
+    ControllerP_U_Personal verficarpu1 = new ControllerP_U_Personal();
+    ControllerP_U_Usuarios verficarpu2=new ControllerP_U_Usuarios();
+
     /**
      * Creates new form FrmConfigConection
      */
@@ -41,7 +44,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
     }
 
     public Image Logo() {
-        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/LogoB&GDash.png"));
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
         return retvalue;
     }
 
@@ -139,7 +142,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
         });
         panelRound1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
 
-        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/MinimizarLogin.png"))); // NOI18N
+        btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -178,12 +181,20 @@ public class FrmConfigConection extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Existen campos vacíos, porfavor llenarlos", "Campos vacios", 0);
         } else {
             if (ControllerConexion.getConnectionModel() != null) {
-                FrmLogin login = new FrmLogin();
                 createFile();
                 writeFile();
                 JOptionPane.showMessageDialog(null, "Se guardo un archivo con\n los datos de la conexón", "Archivo guardado", JOptionPane.INFORMATION_MESSAGE);
-                login.setVisible(true);
-                this.dispose();
+                if (verficarpu.checkEnterprise()==false) {
+                    FrmP_U_Empresa cargarempresa=new FrmP_U_Empresa();
+                    cargarempresa.setVisible(true);
+                }else if(verficarpu.checkEnterprise()==true&&verficarpu1.checkcontrollerPersonal()==false){
+                    FrmP_U_Personal cargarpersonal=new FrmP_U_Personal();
+                    cargarpersonal.setVisible(true);
+                }
+                 else if (verficarpu2.checkControllerUsuario()==false) {
+                        FrmP_U_Usuario cargarusuario=new FrmP_U_Usuario();
+                        cargarusuario.setVisible(true);
+                    }
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo establecer \n" + "conexión con la base de \n" + "datos", "Error 001", 2);
             }
@@ -315,26 +326,42 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     ControllerConfig.host = config.data[2];
                     ControllerConfig.password = config.data[3];
                     ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
-                    boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
-                    ControllerP_U_Personal PrimerPersonal=new ControllerP_U_Personal();
-                    
+                    ControllerP_U_Personal PrimerPersonal = new ControllerP_U_Personal();
+                    ControllerP_U_Usuarios primerUsuarios=new ControllerP_U_Usuarios();
+
                     //lee los valores y los asigna a los attr
-                    if (ControllerConexion.getConnectionModel() != null&&primeraempresa==false) {
+                    if (VistapEmpresa.checkEnterprise() == false) {
                         FrmP_U_Empresa emp = new FrmP_U_Empresa();
                         emp.setVisible(true);
-                     
+                        
+                        /*if (VistapEmpresa.IngresarP_EmpresaController() == false) {
+
+                        } else if (VistapEmpresa.IngresarP_EmpresaController() == true && PrimerPersonal.IngresarPPersonalController() == false) {
+                            FrmP_U_Personal pp = new FrmP_U_Personal();
+                            pp.setVisible(true);
+                        } else if (VistapEmpresa.IngresarP_EmpresaController() == true && PrimerPersonal.IngresarPPersonalController() == true) {
+                            FrmLogin iniciologin = new FrmLogin();
+                            iniciologin.setVisible(true);
+                        }*/
                         //en este proceso se verifica el proceso de primer uso
                         //EMPPRESA, PERSONA Y USUARIO
                         //por el momento abre hacia el login
                         /////login.setVisible(true);                             
                         //no pongo q cierre el frm de conf, porque no ha abierto en este momento        
-                    } 
-                    else if (primeraempresa==true) {
-                            FrmP_U_Personal pe=new FrmP_U_Personal();
-                            pe.setVisible(true);
-                        }
-                    
-                    else{
+                    }
+                    else if (VistapEmpresa.checkEnterprise()==true&&PrimerPersonal.checkcontrollerPersonal()==false) {
+                            FrmP_U_Personal cargarpersonal=new FrmP_U_Personal();
+                            cargarpersonal.setVisible(true);
+                
+                    }
+                    else if (PrimerPersonal.checkcontrollerPersonal()==true&&primerUsuarios.checkControllerUsuario()==true&&VistapEmpresa.checkEnterprise()==false) {
+                        FrmLogin iniciar=new FrmLogin();
+                        iniciar.setVisible(true);
+                    }
+                    /*else if(primerPersonal==true){
+                            FrmP_U_Usuario pu=new FrmP_U_Usuario();
+                            pu.setVisible(true);
+                    }*/ else {
                         config.setVisible(true);//para volver a config, porque salio algo mal                        
                         config.deleteFile();
                     }

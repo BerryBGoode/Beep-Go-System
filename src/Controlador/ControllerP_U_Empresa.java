@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.ModelP_U_Empresa;
 import static com.oracle.jrockit.jfr.ContentType.Bytes;
 import com.sun.org.apache.bcel.internal.util.ByteSequence;
+import java.sql.ResultSet;
 
 /**
  *
@@ -78,6 +79,10 @@ public class ControllerP_U_Empresa {
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+   
+    public boolean checkEnterprise(){
+        return ModelpEmpresa.checkEnterprise();
     }
     
     public boolean IngresarP_EmpresaController(){

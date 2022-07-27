@@ -6,8 +6,11 @@
 package Vista;
 
 import Controlador.ControllerP_U_Personal;
+import Controlador.ControllerP_U_Usuarios;
 import Controles_Personalizados.Calendario.SelectedDate;
+import ValidacionesSistema.ValidacionesBeep_Go;
 import com.sun.awt.AWTUtilities;
+
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
@@ -19,7 +22,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +43,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FrmP_U_Personal extends javax.swing.JFrame {
     DefaultComboBoxModel<String>modelocombo=new DefaultComboBoxModel<>();
     DefaultComboBoxModel<String>modelcombogenero=new DefaultComboBoxModel<>();
-   private int tipop=0;
+   private int tipod=0;
    private int genero=0;
    private List myArrayList;
+   private String fecha;
+   private SimpleDateFormat formatos;
    private List ListGenero;
     ControllerP_U_Personal controllerp=new ControllerP_U_Personal();
-    byte [] fotop;
+    ControllerP_U_Usuarios controlleru=new ControllerP_U_Usuarios();
+    byte [] fotou;
     ImageIcon fotoicon;
+    
+    
     /**
      * Creates new form PrimerUsoPersonal
      */
@@ -54,7 +64,9 @@ public class FrmP_U_Personal extends javax.swing.JFrame {
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
          AWTUtilities. setWindowShape(this, forma);
          setIconImage(Logo());
+         System.out.println("Hola");
          cargarlista();
+         
     }
 public Image Logo(){
     Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
@@ -69,12 +81,12 @@ void ExaminarImagen(){
         String url=jcargarfoto.getSelectedFile().getAbsolutePath();
         try {
             File ruta=new File(url);
-            fotop=new byte[(int) ruta.length()];
+            fotou=new byte[(int) ruta.length()];
             InputStream input= new FileInputStream(ruta);
-            input.read(fotop);
-            controllerp.setLogo(fotop);
+            input.read(fotou);
+            controllerp.setLogo(fotou);
         } catch (Exception e) {
-            controllerp.setLogo(fotop);
+            controllerp.setLogo(fotou);
         }
         try {
             byte[]imagen=controllerp.getLogo();
@@ -89,36 +101,44 @@ void ExaminarImagen(){
     }
             
 }
-void InsercionPPersonal(){
-   
-    if (CmbTipoPersonal.getSelectedItem()==""||CmbGenero.getSelectedItem()=="") {
+void IngresarRegistros(){
+        if (CmbTipoDocumento.getSelectedItem()==""||CmbGenero.getSelectedItem()=="") {
         JOptionPane.showMessageDialog(null, "Escoja una opcion");
     }
-    else if(txtNombre.getText().trim().isEmpty()||txtApellido.getText().trim().isEmpty()||txtCorreo.getText().trim().isEmpty()||txtDirecion.getText().trim().isEmpty()||txtDocumento.getText().trim().isEmpty()){
+    else if(txtNombre.getText().trim().isEmpty()||txtApellido.getText().trim().isEmpty()||txtCorreo.getText().trim().isEmpty()||txtDirecion.getText().trim().isEmpty()||txtDocumento.getText().trim().isEmpty()||TxtUsuario.getText().trim().isEmpty()||DtFechanac.getFechaSeleccionada().isEmpty()){
         JOptionPane.showMessageDialog(null, "No se permiten campos vacios");
+    }else{
+        IngresarUsuario();
+        InsercionPPersonal();
+            if (controllerp.IngresarPPersonalController()==true&&controlleru.IngresarPUsuarioController()==true) {
+                JOptionPane.showMessageDialog(null, "Su registro ha sido ingresado correctamente","Proceso Completado",JOptionPane.INFORMATION_MESSAGE);
+                FrmLogin iniciarSesion =new FrmLogin();
+                iniciarSesion.setVisible(true);
+                this.dispose();
+            }
     }
-    else{
-        SimpleDateFormat format=new SimpleDateFormat();
+}
+void IngresarUsuario(){
+    String clave=TxtUsuario.getText()+"123";
+    controlleru.setUsuario(TxtUsuario.getText());
+    controlleru.setClave(ValidacionesBeep_Go.EncriptarContra(clave));
+    controlleru.setFoto(fotou);
+}
+void InsercionPPersonal(){
+   
 
         controllerp.nombre=txtNombre.getText();
         controllerp.apellido=txtApellido.getText();
         controllerp.correo=txtCorreo.getText();
         controllerp.direccion=txtDirecion.getText();
         controllerp.dui=txtDocumento.getText();
-        controllerp.idtipopersonal=tipop;
+        controllerp.idtipoDocumento=tipod;
         controllerp.idgenero=genero;
-        controllerp.foto=fotop;
-        //controllerp.fechanac= format.parse(d);
-        //controllerp.fechanac=DtFechanac
-        if (controllerp.IngresarPPersonalController()==true) {
-            JOptionPane.showMessageDialog(null, "Se ha agregado un nuevo registro","Proceso completado",JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-       
+        controllerp.fechanac=DtFechanac.getFechaSeleccionada();       
    
 }
 void cargarlista(){
-    CargarTipoPersonal();
+    CargarTipoDocumento();
     CargarGeneroPersonal();
 }
 final void CargarGeneroPersonal(){
@@ -136,20 +156,20 @@ final void CargarGeneroPersonal(){
         else{
             System.out.println("No existen campos");
         }
-    } catch (Exception e) {
+    } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "No se logro cargar la informacion","Error al cargar",JOptionPane.ERROR_MESSAGE);
     }
 }
-final void CargarTipoPersonal(){
+final void CargarTipoDocumento(){
     myArrayList=new ArrayList();
     try {
-         ResultSet rs=controllerp.cargarTipoPersonalController();
+         ResultSet rs=controllerp.cargarTipoDocumentoController();
          if (rs.next()) {
              modelocombo.addElement("");
             do{
-            myArrayList.add(rs.getInt("idTipoPersonal"));
-            modelocombo.addElement(rs.getString("tipo_personal"));
-            CmbTipoPersonal.setModel(modelocombo);
+            myArrayList.add(rs.getInt("idTipoDocumento"));
+            modelocombo.addElement(rs.getString("tipo_documento"));
+            CmbTipoDocumento.setModel(modelocombo);
             }while(rs.next());
         }else{
              System.out.println("No existen campos");
@@ -170,23 +190,26 @@ final void CargarTipoPersonal(){
         PanelFondo = new Controles_Personalizados.Paneles.PanelRound();
         Logo = new Controles_Personalizados.Paneles.PanelRound();
         btnContinuar = new Controles_Personalizados.Botones.ButtonGradient();
-        btnExaminar = new Controles_Personalizados.Botones.ButtonGradient();
-        lblLogo = new javax.swing.JLabel();
         txtDocumento = new Controles_Personalizados.textfields.TextField();
         txtNombre = new Controles_Personalizados.textfields.TextField();
         txtApellido = new Controles_Personalizados.textfields.TextField();
         txtCorreo = new Controles_Personalizados.textfields.TextField();
         txtDirecion = new Controles_Personalizados.textfields.TextField();
         CmbGenero = new Controles_Personalizados.ComboBox.combobox();
-        CmbTipoPersonal = new Controles_Personalizados.ComboBox.combobox();
+        CmbTipoDocumento = new Controles_Personalizados.ComboBox.combobox();
+        DtFechanac = new rojerusan.RSDateChooser();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         LblFoto = new javax.swing.JLabel();
+        BtnExaminar = new Controles_Personalizados.Botones.UWPButton();
+        TxtUsuario = new Controles_Personalizados.textfields.TextField();
         btnMinimizar = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JLabel();
         Imagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1392, 842));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -199,6 +222,7 @@ final void CargarTipoPersonal(){
         PanelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Logo.setBackground(new java.awt.Color(254, 254, 254));
+        Logo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         Logo.setPreferredSize(new java.awt.Dimension(698, 768));
         Logo.setRoundBottomLeft(35);
         Logo.setRoundTopLeft(35);
@@ -214,24 +238,7 @@ final void CargarTipoPersonal(){
                 btnContinuarActionPerformed(evt);
             }
         });
-        Logo.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 710, 150, -1));
-
-        btnExaminar.setText("Examinar");
-        btnExaminar.setToolTipText("");
-        btnExaminar.setColor1(new java.awt.Color(42, 36, 56));
-        btnExaminar.setColor2(new java.awt.Color(42, 36, 56));
-        btnExaminar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        btnExaminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExaminarActionPerformed(evt);
-            }
-        });
-        Logo.add(btnExaminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 480, 150, -1));
-
-        lblLogo.setFont(new java.awt.Font("Roboto Thin", 0, 18)); // NOI18N
-        lblLogo.setForeground(new java.awt.Color(91, 91, 95));
-        lblLogo.setText("Foto (Opcional)");
-        Logo.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 180, -1, -1));
+        Logo.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 780, 150, -1));
 
         txtDocumento.setBackground(new java.awt.Color(254, 254, 254));
         txtDocumento.setForeground(new java.awt.Color(42, 36, 56));
@@ -245,7 +252,7 @@ final void CargarTipoPersonal(){
                 txtDocumentoActionPerformed(evt);
             }
         });
-        Logo.add(txtDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 310, 70));
+        Logo.add(txtDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 310, 70));
 
         txtNombre.setBackground(new java.awt.Color(254, 254, 254));
         txtNombre.setForeground(new java.awt.Color(42, 36, 56));
@@ -254,7 +261,7 @@ final void CargarTipoPersonal(){
         txtNombre.setLabelText("Nombres");
         txtNombre.setLineColor(new java.awt.Color(42, 36, 56));
         txtNombre.setSelectionColor(new java.awt.Color(58, 50, 75));
-        Logo.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 310, 70));
+        Logo.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 310, 70));
 
         txtApellido.setBackground(new java.awt.Color(254, 254, 254));
         txtApellido.setForeground(new java.awt.Color(42, 36, 56));
@@ -263,7 +270,7 @@ final void CargarTipoPersonal(){
         txtApellido.setLabelText("Apellidos");
         txtApellido.setLineColor(new java.awt.Color(42, 36, 56));
         txtApellido.setSelectionColor(new java.awt.Color(58, 50, 75));
-        Logo.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 310, 70));
+        Logo.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 310, 70));
 
         txtCorreo.setBackground(new java.awt.Color(254, 254, 254));
         txtCorreo.setForeground(new java.awt.Color(42, 36, 56));
@@ -273,7 +280,7 @@ final void CargarTipoPersonal(){
         txtCorreo.setLabelText("Correo Electronico");
         txtCorreo.setLineColor(new java.awt.Color(42, 36, 56));
         txtCorreo.setSelectionColor(new java.awt.Color(58, 50, 75));
-        Logo.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 310, 70));
+        Logo.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 570, 310, 70));
 
         txtDirecion.setBackground(new java.awt.Color(254, 254, 254));
         txtDirecion.setForeground(new java.awt.Color(42, 36, 56));
@@ -282,7 +289,7 @@ final void CargarTipoPersonal(){
         txtDirecion.setLabelText("Direccion");
         txtDirecion.setLineColor(new java.awt.Color(42, 36, 56));
         txtDirecion.setSelectionColor(new java.awt.Color(58, 50, 75));
-        Logo.add(txtDirecion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 310, 70));
+        Logo.add(txtDirecion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 310, 70));
 
         CmbGenero.setBackground(new java.awt.Color(254, 254, 254));
         CmbGenero.setForeground(new java.awt.Color(42, 36, 56));
@@ -294,34 +301,64 @@ final void CargarTipoPersonal(){
                 CmbGeneroItemStateChanged(evt);
             }
         });
-        Logo.add(CmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, 310, 80));
+        Logo.add(CmbGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 310, 80));
 
-        CmbTipoPersonal.setBackground(new java.awt.Color(254, 254, 254));
-        CmbTipoPersonal.setForeground(new java.awt.Color(42, 36, 56));
-        CmbTipoPersonal.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        CmbTipoPersonal.setLabeText("Tipo - Personal");
-        CmbTipoPersonal.setLineColor(new java.awt.Color(42, 36, 56));
-        CmbTipoPersonal.addItemListener(new java.awt.event.ItemListener() {
+        CmbTipoDocumento.setBackground(new java.awt.Color(254, 254, 254));
+        CmbTipoDocumento.setForeground(new java.awt.Color(42, 36, 56));
+        CmbTipoDocumento.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        CmbTipoDocumento.setLabeText("Tipo  Documento");
+        CmbTipoDocumento.setLineColor(new java.awt.Color(42, 36, 56));
+        CmbTipoDocumento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbTipoPersonalItemStateChanged(evt);
+                CmbTipoDocumentoItemStateChanged(evt);
             }
         });
-        CmbTipoPersonal.addActionListener(new java.awt.event.ActionListener() {
+        CmbTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmbTipoPersonalActionPerformed(evt);
+                CmbTipoDocumentoActionPerformed(evt);
             }
         });
-        Logo.add(CmbTipoPersonal, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 510, 310, 80));
+        Logo.add(CmbTipoDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 310, 80));
+
+        DtFechanac.setColorBackground(new java.awt.Color(42, 36, 56));
+        DtFechanac.setColorButtonHover(new java.awt.Color(60, 63, 65));
+        DtFechanac.setColorDiaActual(new java.awt.Color(42, 36, 56));
+        DtFechanac.setFormatoFecha("yyyy-MM-dd");
+        DtFechanac.setFuente(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        Logo.add(DtFechanac, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 310, 40));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setText("Fecha nacimiento");
-        Logo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, -1, -1));
+        jLabel1.setText("Fecha Nacimiento");
+        Logo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, -1, -1));
 
-        LblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        Logo.add(LblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 220, 250));
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setText("Foto (Opcional)");
+        Logo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, -1, -1));
 
-        PanelFondo.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, -1));
+        LblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Logo.add(LblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 220, 230));
+
+        BtnExaminar.setBackground(new java.awt.Color(42, 36, 56));
+        BtnExaminar.setText("Examinar");
+        BtnExaminar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        BtnExaminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnExaminarActionPerformed(evt);
+            }
+        });
+        Logo.add(BtnExaminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 220, 50));
+
+        TxtUsuario.setBackground(new java.awt.Color(254, 254, 254));
+        TxtUsuario.setForeground(new java.awt.Color(42, 36, 56));
+        TxtUsuario.setToolTipText("");
+        TxtUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        TxtUsuario.setLabelText("Usuario");
+        TxtUsuario.setLineColor(new java.awt.Color(42, 36, 56));
+        Logo.add(TxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, 310, 80));
+
+        PanelFondo.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 850));
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -329,7 +366,7 @@ final void CargarTipoPersonal(){
                 btnMinimizarMouseClicked(evt);
             }
         });
-        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 21, -1, -1));
+        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 21, -1, -1));
 
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/CerrarLogin.png"))); // NOI18N
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -337,12 +374,12 @@ final void CargarTipoPersonal(){
                 btnCerrarMousePressed(evt);
             }
         });
-        PanelFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 20, -1, -1));
+        PanelFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 20, -1, -1));
 
         Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/PersonalImg.png"))); // NOI18N
-        PanelFondo.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 130, -1, -1));
+        PanelFondo.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, 500, 530));
 
-        getContentPane().add(PanelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(PanelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 850));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -356,27 +393,27 @@ final void CargarTipoPersonal(){
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
-    private void CmbTipoPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbTipoPersonalActionPerformed
+    private void CmbTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbTipoDocumentoActionPerformed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_CmbTipoPersonalActionPerformed
+    }//GEN-LAST:event_CmbTipoDocumentoActionPerformed
 
-    private void CmbTipoPersonalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbTipoPersonalItemStateChanged
+    private void CmbTipoDocumentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbTipoDocumentoItemStateChanged
         // TODO add your handling code here:º
         if (evt.getStateChange()==ItemEvent.SELECTED) {
-            int pos=CmbTipoPersonal.getSelectedIndex();
+            int pos=CmbTipoDocumento.getSelectedIndex();
             if (pos==0) {
-                tipop=0;
+                tipod=0;
             }else{
                 int dim=myArrayList.size();
                 for (int i = 0; i < dim; i++) {
                     if (i==pos-1) {
-                        tipop=(int) myArrayList.get(i);
+                        tipod=(int) myArrayList.get(i);
                     }
                 }
             }
         }
-    }//GEN-LAST:event_CmbTipoPersonalItemStateChanged
+    }//GEN-LAST:event_CmbTipoDocumentoItemStateChanged
 
     private void CmbGeneroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbGeneroItemStateChanged
         // TODO add your handling code here:
@@ -401,16 +438,14 @@ final void CargarTipoPersonal(){
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
-        InsercionPPersonal();
-        /*FrmP_U_Usuario pu = new FrmP_U_Usuario();
-        pu.setVisible(true);
-        this.dispose();*/
+        IngresarRegistros();
+        
     }//GEN-LAST:event_btnContinuarActionPerformed
 
-    private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
+    private void BtnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExaminarActionPerformed
         // TODO add your handling code here:
         ExaminarImagen();
-    }//GEN-LAST:event_btnExaminarActionPerformed
+    }//GEN-LAST:event_BtnExaminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -449,18 +484,20 @@ final void CargarTipoPersonal(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Controles_Personalizados.Botones.UWPButton BtnExaminar;
     private Controles_Personalizados.ComboBox.combobox CmbGenero;
-    private Controles_Personalizados.ComboBox.combobox CmbTipoPersonal;
+    private Controles_Personalizados.ComboBox.combobox CmbTipoDocumento;
+    private rojerusan.RSDateChooser DtFechanac;
     private javax.swing.JLabel Imagen;
     private javax.swing.JLabel LblFoto;
     private Controles_Personalizados.Paneles.PanelRound Logo;
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
+    private Controles_Personalizados.textfields.TextField TxtUsuario;
     private javax.swing.JLabel btnCerrar;
     private Controles_Personalizados.Botones.ButtonGradient btnContinuar;
-    private Controles_Personalizados.Botones.ButtonGradient btnExaminar;
     private javax.swing.JLabel btnMinimizar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel jLabel2;
     private Controles_Personalizados.textfields.TextField txtApellido;
     private Controles_Personalizados.textfields.TextField txtCorreo;
     private Controles_Personalizados.textfields.TextField txtDirecion;

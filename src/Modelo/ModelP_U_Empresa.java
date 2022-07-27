@@ -7,6 +7,8 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,12 +16,24 @@ import javax.swing.JOptionPane;
  * @author danlo
  */
 public class ModelP_U_Empresa {
-
+    
     //Hermoso papucho
-    PreparedStatement ps;
+    PreparedStatement ps;    
     Connection con;
 
+    public boolean checkEnterprise(){
+    
+        try {
+            con = ModelConexion.getConnection();
+            ps = con.prepareStatement("SELECT * FROM tbEmpresas");            
+            ResultSet rs = ps.executeQuery();            
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
     public boolean IngresarPEmpresa(String nombre, String representante_Legal, String direccion, String NIT, String CNR, byte[] logo) {
+        
         try {
             con = ModelConexion.getConnection();
             String query = ("INSERT INTO tbEmpresas VALUES (?,?,?,?,?,?)");
@@ -30,9 +44,10 @@ public class ModelP_U_Empresa {
             ps.setString(4, NIT);
             ps.setString(5, CNR);
             ps.setBytes(6, logo);
+            ps.executeUpdate();
             return true;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al realizar el proceso" + e.toString());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al realizar el proceso" + e.toString(),"Proceso incompleto",JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }

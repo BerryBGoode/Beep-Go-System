@@ -15,8 +15,8 @@ import java.sql.ResultSet;
  */
 public class ControllerP_U_Personal {
     ModelP_U_Personal useControllerP=new ModelP_U_Personal();
-    public ResultSet cargarTipoPersonalController(){
-        return useControllerP.cargarTipoP();
+    public ResultSet cargarTipoDocumentoController(){
+        return useControllerP.cargarTipD();
     }
     public ResultSet cargarGeneroController(){
         return useControllerP.cargarGeneroP();
@@ -24,11 +24,11 @@ public class ControllerP_U_Personal {
     public int idpersonal;
     public String nombre;
     public String apellido;
-    public Date fechanac;
+    public String fechanac;
     public String correo;
     public String direccion;
     public String dui;
-    public int idtipopersonal;
+    public int idtipoDocumento;
     public int idgenero;
     public byte[] foto;
 
@@ -56,11 +56,11 @@ public class ControllerP_U_Personal {
         this.apellido = apellido;
     }
 
-    public Date getFechanac() {
+    public String getFechanac() {
         return fechanac;
     }
 
-    public void setFechanac(Date fechanac) {
+    public void setFechanac(String fechanac) {
         this.fechanac = fechanac;
     }
 
@@ -88,12 +88,12 @@ public class ControllerP_U_Personal {
         this.dui = dui;
     }
 
-    public int getIdtipopersonal() {
-        return idtipopersonal;
+    public int getIdtipoDocumento() {
+        return idtipoDocumento;
     }
 
-    public void setIdtipopersonal(int idtipopersonal) {
-        this.idtipopersonal = idtipopersonal;
+    public void setIdtipoDocunmento(int idtipopersonal) {
+        this.idtipoDocumento = idtipopersonal;
     }
 
     public int getIdgenero() {
@@ -111,9 +111,11 @@ public class ControllerP_U_Personal {
     public void setLogo(byte[] foto) {
         this.foto = foto;
     }
-    
+    public Boolean checkcontrollerPersonal(){
+    return useControllerP.checkPersonal();
+    }
     public boolean IngresarPPersonalController(){
-        return useControllerP.IngresarPPersonal(nombre, apellido, fechanac, correo, direccion, dui, idgenero, idgenero,foto);
+        return useControllerP.IngresarPPersonal(nombre, apellido, fechanac, correo, direccion, dui, idgenero, idtipoDocumento);
     }
     
 }

@@ -5,11 +5,16 @@
  */
 package Vista;
 
+import Controlador.ControllerP_U_Usuarios;
 import com.sun.awt.AWTUtilities;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 
 /**
@@ -17,6 +22,10 @@ import javax.swing.JFrame;
  * @author danlo
  */
 public class FrmP_U_Usuario extends javax.swing.JFrame {
+    DefaultComboBoxModel<String>modelcombotipouser=new DefaultComboBoxModel<>();
+    private int tipousuario=0;
+    private List ListTipoUser;
+    ControllerP_U_Usuarios ObjVista=new ControllerP_U_Usuarios();
 
     /**
      * Creates new form PrimerUsoUsuario
@@ -27,6 +36,7 @@ public class FrmP_U_Usuario extends javax.swing.JFrame {
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
          AWTUtilities. setWindowShape(this, forma);
          setIconImage(Logo());
+         cargarlistas();
     }
 public Image Logo(){
     Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
@@ -44,14 +54,13 @@ public Image Logo(){
         PanelFondo = new Controles_Personalizados.Paneles.PanelRound();
         PanelContenedorCampos = new Controles_Personalizados.Paneles.PanelRound();
         txtUsuario = new Controles_Personalizados.textfields.TextField();
-        txtContraseña = new Controles_Personalizados.textfields.TextField();
-        txtPIN = new Controles_Personalizados.textfields.TextField();
-        CmbEstado = new Controles_Personalizados.ComboBox.combobox();
-        CmbTipo = new Controles_Personalizados.ComboBox.combobox();
         btnContinuar = new Controles_Personalizados.Botones.ButtonGradient();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        buttonGradient1 = new Controles_Personalizados.Botones.ButtonGradient();
         btnMinimizar = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JLabel();
-        Imagen = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -79,39 +88,7 @@ public Image Logo(){
         txtUsuario.setLabelText("Nombre - usuario");
         txtUsuario.setLineColor(new java.awt.Color(42, 36, 56));
         txtUsuario.setSelectionColor(new java.awt.Color(58, 50, 75));
-        PanelContenedorCampos.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 310, 70));
-
-        txtContraseña.setBackground(new java.awt.Color(254, 254, 254));
-        txtContraseña.setForeground(new java.awt.Color(42, 36, 56));
-        txtContraseña.setCaretColor(new java.awt.Color(42, 36, 56));
-        txtContraseña.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtContraseña.setLabelText("Contraseña");
-        txtContraseña.setLineColor(new java.awt.Color(42, 36, 56));
-        txtContraseña.setSelectionColor(new java.awt.Color(58, 50, 75));
-        PanelContenedorCampos.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 310, 70));
-
-        txtPIN.setBackground(new java.awt.Color(254, 254, 254));
-        txtPIN.setForeground(new java.awt.Color(42, 36, 56));
-        txtPIN.setCaretColor(new java.awt.Color(42, 36, 56));
-        txtPIN.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtPIN.setLabelText("PIN (Combinacion Propia)");
-        txtPIN.setLineColor(new java.awt.Color(42, 36, 56));
-        txtPIN.setSelectionColor(new java.awt.Color(58, 50, 75));
-        PanelContenedorCampos.add(txtPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 310, 70));
-
-        CmbEstado.setBackground(new java.awt.Color(254, 254, 254));
-        CmbEstado.setForeground(new java.awt.Color(42, 36, 56));
-        CmbEstado.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        CmbEstado.setLabeText("Estado - Usuario");
-        CmbEstado.setLineColor(new java.awt.Color(42, 36, 56));
-        PanelContenedorCampos.add(CmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 540, 310, 80));
-
-        CmbTipo.setBackground(new java.awt.Color(254, 254, 254));
-        CmbTipo.setForeground(new java.awt.Color(42, 36, 56));
-        CmbTipo.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        CmbTipo.setLabeText("Tipo - Usuario");
-        CmbTipo.setLineColor(new java.awt.Color(42, 36, 56));
-        PanelContenedorCampos.add(CmbTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 310, 80));
+        PanelContenedorCampos.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 310, 70));
 
         btnContinuar.setText("Continuar");
         btnContinuar.setColor1(new java.awt.Color(42, 36, 56));
@@ -122,9 +99,23 @@ public Image Logo(){
                 btnContinuarActionPerformed(evt);
             }
         });
-        PanelContenedorCampos.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 710, 150, -1));
+        PanelContenedorCampos.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 710, 150, -1));
 
-        PanelFondo.add(PanelContenedorCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
+        PanelContenedorCampos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 250, 280));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(91, 91, 95));
+        jLabel2.setText("Foto  (Opcional)");
+        PanelContenedorCampos.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
+
+        buttonGradient1.setText("Examinar");
+        buttonGradient1.setColor1(new java.awt.Color(42, 36, 56));
+        buttonGradient1.setColor2(new java.awt.Color(42, 36, 56));
+        buttonGradient1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        PanelContenedorCampos.add(buttonGradient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 390, 150, 44));
+
+        PanelFondo.add(PanelContenedorCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, -1));
 
         btnMinimizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Maximizar.png"))); // NOI18N
         btnMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -132,7 +123,7 @@ public Image Logo(){
                 btnMinimizarMouseClicked(evt);
             }
         });
-        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 20, -1, -1));
+        PanelFondo.add(btnMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 21, -1, -1));
 
         btnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/CerrarLogin.png"))); // NOI18N
         btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -140,12 +131,12 @@ public Image Logo(){
                 btnCerrarMousePressed(evt);
             }
         });
-        PanelFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 20, -1, -1));
+        PanelFondo.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1380, 20, -1, -1));
 
-        Imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/UserImg.png"))); // NOI18N
-        PanelFondo.add(Imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 140, -1, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/Blog post-amico.png"))); // NOI18N
+        PanelFondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 140, -1, -1));
 
-        getContentPane().add(PanelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(PanelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1410, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -155,7 +146,31 @@ public Image Logo(){
         FrmLogin log = new FrmLogin();
         log.setVisible(true);
         this.dispose();
+        cargarlistas();
     }//GEN-LAST:event_btnContinuarActionPerformed
+void cargarlistas(){
+    cargartipousuario();
+}
+final void cargartipousuario(){
+    ListTipoUser=new ArrayList();
+    try {
+        ResultSet rs=ObjVista.cargarTipoUsuarioController();
+        if (rs.next()) {
+            modelcombotipouser.addElement("");
+            do {
+                ListTipoUser.add(rs.getInt("idTipoUsuario"));
+                modelcombotipouser.addElement(rs.getString("tipo_usuario"));
+               // CmbTipo.setModel(modelcombotipouser);
+            } while (rs.next());
+            
+        }
+        else{
+            System.out.println("No existen campos");
+        }
+    } catch (Exception e) {
+        System.out.println(e.toString());
+    }
+}
 
     private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
         System.exit(0);
@@ -203,16 +218,15 @@ public Image Logo(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Controles_Personalizados.ComboBox.combobox CmbEstado;
-    private Controles_Personalizados.ComboBox.combobox CmbTipo;
-    private javax.swing.JLabel Imagen;
     private Controles_Personalizados.Paneles.PanelRound PanelContenedorCampos;
     private Controles_Personalizados.Paneles.PanelRound PanelFondo;
     private javax.swing.JLabel btnCerrar;
     private Controles_Personalizados.Botones.ButtonGradient btnContinuar;
     private javax.swing.JLabel btnMinimizar;
-    private Controles_Personalizados.textfields.TextField txtContraseña;
-    private Controles_Personalizados.textfields.TextField txtPIN;
+    private Controles_Personalizados.Botones.ButtonGradient buttonGradient1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private Controles_Personalizados.textfields.TextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

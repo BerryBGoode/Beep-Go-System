@@ -468,7 +468,7 @@ public final class DateChooser extends javax.swing.JPanel {
         this.dateFormat = dateFormat;
     }
 
-    public void setSelectedDate(Date date) {
+    public void setSelectedDate(String date) {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String d = df.format(date);
         DAY = Integer.valueOf(d.split("-")[0]);
@@ -501,7 +501,7 @@ public final class DateChooser extends javax.swing.JPanel {
     private Controles_Personalizados.Calendario.Slider slide;
     // End of variables declaration//GEN-END:variables
 
-    public SelectedDate getSelectedDate() {
+    public SelectedDate  getSelectedDate() {
         return selectedDate;
     }
 
@@ -529,5 +529,9 @@ public final class DateChooser extends javax.swing.JPanel {
             header.setBackground(color);
             toDay(false);
         }
+    }
+
+    public void toFront() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

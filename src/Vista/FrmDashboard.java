@@ -30,12 +30,16 @@ public class FrmDashboard extends javax.swing.JFrame{
     /**
      * Creates new form Dashboard
      */
-    public FrmDashboard() {
+    public FrmDashboard(String nombre, String tipo) {
         initComponents();
         this.setLocationRelativeTo(null); 
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
          AWTUtilities. setWindowShape(this, forma);
          setIconImage(Logo());
+         
+         lblNombre.setText(nombre);
+         lblTipo.setText(tipo); 
+         
          lblNormal.setVisible(false);
          lblUsuarioDark.setVisible(false);
          lblNight.setVisible(false);
@@ -60,7 +64,13 @@ public class FrmDashboard extends javax.swing.JFrame{
          PanelContenedorForms.add(pl);
          PanelContenedorForms.revalidate();
          PanelContenedorForms.repaint();
+        
     }
+    
+    public FrmDashboard() {
+        initComponents();
+    }
+    
 public Image Logo(){
     Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
     return retvalue;
