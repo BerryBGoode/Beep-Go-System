@@ -191,10 +191,6 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     FrmP_U_Personal cargarpersonal=new FrmP_U_Personal();
                     cargarpersonal.setVisible(true);
                 }
-                 else if (verficarpu2.checkControllerUsuario()==false) {
-                        FrmP_U_Usuario cargarusuario=new FrmP_U_Usuario();
-                        cargarusuario.setVisible(true);
-                    }
 
                 
                 ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
