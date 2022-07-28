@@ -23,7 +23,7 @@ public class FrmRestablecimiento extends javax.swing.JFrame {
     /**
      * Creates new form FrmRestablecimiento
      */
-    public FrmRestablecimiento(java.awt.Frame parent, boolean modal) {
+    public FrmRestablecimiento() {
         initComponents();
         this.setLocationRelativeTo(null); 
          Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
