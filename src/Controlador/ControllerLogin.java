@@ -32,11 +32,31 @@ public class ControllerLogin {
         this.contraseña = contraseña;
     }
     
-    public int validarLoginC(){
-        return ModelLogin.ValidarLogin(usuario, contraseña);
+    public int validarUsuarioController(){
+        return ModelLogin.ValidarUsuario(usuario);
     }
     
-    public ResultSet CapturarDatosController(String usuario){
+    public int validarLoginC(){
+        return ModelLogin.ValidarLogin(usuario, contraseña);
+     }   
+ 
+    public int ValidarUsuarioActivoController(){
+        return ModelLogin.ValidarUsuarioActivo(usuario);
+    }
+    
+    public boolean BloquearUsuarioController(){
+        return ModelLogin.BloquearUsuario(usuario);
+    }
+
+    public boolean IntentosController(int intentos){
+        return ModelLogin.Intentos(intentos, usuario);
+    }
+    
+    public ResultSet CapturarIntentosController(){
+       return ModelLogin.CapturarIntentos(usuario);
+    }
+    
+    public ResultSet CapturarDatosController(){
         return ModelLogin.CapturarDatos(usuario);
     }
 }

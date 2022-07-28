@@ -13,7 +13,6 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,6 +36,7 @@ public class FrmLogin extends javax.swing.JFrame {
     public int ID;
     private String nombre;
     private String tipo; 
+    private int intentos;
     
 public Image Logo(){
     Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
@@ -190,16 +190,50 @@ public Image Logo(){
             String contra = ValidacionesSistema.ValidacionesBeep_Go.EncriptarContra(String.valueOf(txtContra.getPassword()));
 
             objc.contraseña = contra;
+            
+            int respuesta0 = objc.validarUsuarioController();
+            
+            if(respuesta0 == 1){
+                int respuesta1 = objc.ValidarUsuarioActivoController();
 
-            int respuesta = objc.validarLoginC();
+                if(respuesta1 == 1){
+                    int respuesta2 = objc.validarLoginC();
 
-            if (respuesta == 1) {
-                CargarDatos();
-                FrmDashboard rec = new FrmDashboard(nombre, tipo);
-                rec.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+                    if (respuesta2 == 1) {
+                        CargarDatos();
+                        if(txtContra.getText().equals(txtUsuario.getText() + "123")){
+                            //FrmRestablecimiento frm = new FrmRestablecimiento();
+                            //frm.setVisible(true);
+                            this.dispose();
+                        }else{
+                            FrmDashboard frm = new FrmDashboard(nombre, tipo);
+                            frm.setVisible(true);
+                            this.dispose();
+                        }
+                    }else{
+                        ResultSet rs;
+                        rs = objc.CapturarIntentosController();
+                        try{
+                            if(rs.next()){
+                                intentos = rs.getInt("intentos");
+                            }
+                        }catch (Exception e){
+                            JOptionPane.showMessageDialog(null, "Error al validar las credenciales");
+                        }
+                        if(intentos >= 1){
+                            int intentosf = intentos - 1;
+                            objc.IntentosController(intentosf);
+                            JOptionPane.showMessageDialog(null, "Credenciales incorrectas, intentos restantes: " + intentosf);
+                        }else{
+                            objc.BloquearUsuarioController();
+                            JOptionPane.showMessageDialog(null, "Usuario bloqueado");
+                        }
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Usuario bloqueado");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuario inexistente");
             }
         }
     }
@@ -212,8 +246,8 @@ public Image Logo(){
     void CargarDatos() {
         ControllerLogin objc = new ControllerLogin();
         ResultSet rs;
-        rs = objc.CapturarDatosController(txtUsuario.getText());
-        ArrayList<String> datos = new ArrayList<String>();
+        objc.usuario = txtUsuario.getText();
+        rs = objc.CapturarDatosController();
 
         try {
             if (rs.next()) {

@@ -349,7 +349,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
                     ControllerP_U_Personal PrimerPersonal = new ControllerP_U_Personal();
                     ControllerP_U_Usuarios primerUsuarios=new ControllerP_U_Usuarios();
-                    
+                  
                     //lee los valores y los asigna a los attr
                     if (VistapEmpresa.checkEnterprise() == false) {
                         FrmP_U_Empresa emp = new FrmP_U_Empresa();

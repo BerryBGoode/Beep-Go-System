@@ -5,6 +5,11 @@
  */
 package ValidacionesSistema;
 
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -61,10 +66,6 @@ public class ValidacionesBeep_Go {
             byte[] messageDigest = md.digest(p.getBytes());
             BigInteger number = new BigInteger(1, messageDigest);
             String hashtext = number.toString(16);
-
-            while (hashtext.length() < 32) {
-            hashtext = "0" + hashtext;
-            }
             return hashtext;
         }catch(NoSuchAlgorithmException e){
             throw new RuntimeException(e);
@@ -78,8 +79,7 @@ public class ValidacionesBeep_Go {
     }   
     
     public static String EncriptarContra(String p){
-        String md5 = MD5(p);
-        String sha1 = SHA1(md5);
+        String sha1 = SHA1(p);
         String sha2 = SHA256(sha1);
         String base64 = EBase64(sha2);
         String f = MD5(base64);
@@ -104,12 +104,42 @@ public class ValidacionesBeep_Go {
         }
     }
     
+    public static void SoloNumeros(java.awt.event.KeyEvent evt){
+        char car = evt.getKeyChar();
+        if(Character.isDigit(car)){
+
+        }else{
+            evt.consume();
+        }
+    }
+    
     public static void SinEspacios(java.awt.event.KeyEvent evt){
         char key = evt.getKeyChar();
 
         if (Character.isSpace(key))
         {
             evt.consume();
+        }
+    }
+    
+    public static void Notificacion(String encabezado, String mensaje, int tipo_mensaje){
+        try{
+            SystemTray tray = SystemTray.getSystemTray();
+            Image image = Toolkit.getDefaultToolkit().createImage("some-icon.png");
+            TrayIcon trayIcon = new TrayIcon(image, "Java AWT Tray Demo");
+            trayIcon.setImageAutoSize(true);
+            trayIcon.setToolTip("System tray icon demo");
+            tray.add(trayIcon);
+            
+            if(tipo_mensaje == 1){
+                trayIcon.displayMessage(encabezado, mensaje, MessageType.INFO);
+            }else if(tipo_mensaje == 2){
+                trayIcon.displayMessage(encabezado, mensaje, MessageType.ERROR);
+            }else{
+                trayIcon.displayMessage(encabezado, mensaje, MessageType.WARNING);
+            }
+        }catch(Exception ex){
+            System.err.print(ex); 
         }
     }
 }

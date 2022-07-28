@@ -5,12 +5,15 @@
  */
 package Vista;
 
+import Controlador.ControllerRecuperacionContra;
 import com.sun.awt.AWTUtilities;
 import java.awt.Image;
 import java.awt.Shape;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,8 +49,8 @@ public Image Logo(){
         textoRest = new javax.swing.JLabel();
         btnGoBack = new javax.swing.JLabel();
         txtUsuario = new Controles_Personalizados.textfields.TextField();
-        txtPIN = new Controles_Personalizados.textfields.TextField();
         btnRestablecer = new Controles_Personalizados.Botones.ButtonGradient();
+        txtPIN = new Controles_Personalizados.textfields.PasswordField();
         ImagenRecuPIN = new javax.swing.JLabel();
         btnMinimizar = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JLabel();
@@ -89,17 +92,15 @@ public Image Logo(){
         txtUsuario.setLabelText("Nombre - Usuario");
         txtUsuario.setLineColor(new java.awt.Color(42, 36, 56));
         txtUsuario.setSelectionColor(new java.awt.Color(58, 50, 75));
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
         PanelCampos.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 310, 70));
-
-        txtPIN.setBackground(new java.awt.Color(254, 254, 254));
-        txtPIN.setForeground(new java.awt.Color(42, 36, 56));
-        txtPIN.setToolTipText("");
-        txtPIN.setCaretColor(new java.awt.Color(42, 36, 56));
-        txtPIN.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtPIN.setLabelText("PIN propio");
-        txtPIN.setLineColor(new java.awt.Color(42, 36, 56));
-        txtPIN.setSelectionColor(new java.awt.Color(58, 50, 75));
-        PanelCampos.add(txtPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 310, 70));
 
         btnRestablecer.setText("Restablecer");
         btnRestablecer.setToolTipText("");
@@ -112,6 +113,25 @@ public Image Logo(){
             }
         });
         PanelCampos.add(btnRestablecer, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 560, 300, -1));
+
+        txtPIN.setBackground(new java.awt.Color(254, 254, 254));
+        txtPIN.setForeground(new java.awt.Color(42, 36, 56));
+        txtPIN.setCaretColor(new java.awt.Color(42, 36, 56));
+        txtPIN.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        txtPIN.setLabelText("PIN ");
+        txtPIN.setLineColor(new java.awt.Color(42, 36, 56));
+        txtPIN.setPreferredSize(new java.awt.Dimension(6, 54));
+        txtPIN.setSelectionColor(new java.awt.Color(58, 50, 75));
+        txtPIN.setShowAndHide(true);
+        txtPIN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPINKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPINKeyTyped(evt);
+            }
+        });
+        PanelCampos.add(txtPIN, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 310, 70));
 
         PanelImagen.add(PanelCampos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -148,9 +168,7 @@ public Image Logo(){
 
     private void btnRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestablecerActionPerformed
         // TODO add your handling code here:
-        FrmRestablecimiento fr = new FrmRestablecimiento(new javax.swing.JFrame(),true);
-        fr.setVisible(true);
-        this.dispose();
+        RecuperarContra();
     }//GEN-LAST:event_btnRestablecerActionPerformed
 
     private void btnCerrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMousePressed
@@ -162,6 +180,76 @@ public Image Logo(){
         this.setExtendedState(JFrame.ICONIFIED);
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(txtUsuario.getText().length() >= 15)
+        {
+            evt.consume();
+        }else{
+            if(txtUsuario.getText().equals("") && car == 95){
+                evt.consume();
+            }else if(txtUsuario.getText().contains("_") && car == 95){
+                evt.consume();
+            }else{
+                ValidacionesSistema.ValidacionesBeep_Go.SinEspacios(evt);
+                ValidacionesSistema.ValidacionesBeep_Go.SoloLetrasNumerosGuionBajo(evt);
+            }
+        }
+    }//GEN-LAST:event_txtUsuarioKeyTyped
+
+    private void txtPINKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPINKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            RecuperarContra();
+        }
+    }//GEN-LAST:event_txtPINKeyPressed
+
+    private void txtPINKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPINKeyTyped
+        // TODO add your handling code here:
+        if(txtPIN.getText().length() >= 6){
+            evt.consume();
+        }else{
+            ValidacionesSistema.ValidacionesBeep_Go.SinEspacios(evt);
+            ValidacionesSistema.ValidacionesBeep_Go.SoloNumeros(evt);
+        }
+    }//GEN-LAST:event_txtPINKeyTyped
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        // TODO add your handling code here:
+         if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            RecuperarContra();
+        }
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    void RecuperarContra(){
+        if (txtUsuario.getText().equals("") || txtPIN.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Existen campos vacios", "Error de procesamiento", JOptionPane.WARNING_MESSAGE);
+        } else {
+            ControllerRecuperacionContra obj = new ControllerRecuperacionContra();
+            obj.usuario = txtUsuario.getText();
+            String PIN = ValidacionesSistema.ValidacionesBeep_Go.EncriptarContra(String.valueOf(txtPIN.getText()));
+            obj.PIN = PIN;
+            
+            int respuesta = obj.RecuperarContraPINController();
+
+            if (respuesta == 1) {
+                obj.contra = ValidacionesSistema.ValidacionesBeep_Go.EncriptarContra(txtUsuario.getText() + "123");
+                boolean respuesta2 = obj.RecuperarContraController();
+                if(respuesta2 == true){
+                    ValidacionesSistema.ValidacionesBeep_Go.Notificacion("Proceso completado", "La contraseña ha sido actualizada", 1);
+                    FrmLogin log = new FrmLogin();
+                    log.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña no pudo ser actualizada", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -207,7 +295,7 @@ public Image Logo(){
     private javax.swing.JLabel btnMinimizar;
     private Controles_Personalizados.Botones.ButtonGradient btnRestablecer;
     private javax.swing.JLabel textoRest;
-    private Controles_Personalizados.textfields.TextField txtPIN;
+    private Controles_Personalizados.textfields.PasswordField txtPIN;
     private Controles_Personalizados.textfields.TextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
