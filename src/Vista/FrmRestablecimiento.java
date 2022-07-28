@@ -51,7 +51,6 @@ public Image Logo(){
         btnCerrar = new javax.swing.JLabel();
         txtApellido = new Controles_Personalizados.textfields.TextField();
         txtCorreo = new Controles_Personalizados.textfields.TextField();
-        txtNombre = new Controles_Personalizados.textfields.TextField();
         lblText = new javax.swing.JLabel();
         btnRestablecer = new Controles_Personalizados.Botones.ButtonGradient();
 
@@ -110,7 +109,7 @@ public Image Logo(){
         txtApellido.setLabelText("Nueva contraseña");
         txtApellido.setLineColor(new java.awt.Color(254, 254, 254));
         txtApellido.setSelectionColor(new java.awt.Color(58, 50, 75));
-        panelRound1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 400, 310, 70));
+        panelRound1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 320, 310, 70));
 
         txtCorreo.setBackground(new java.awt.Color(42, 36, 56));
         txtCorreo.setForeground(new java.awt.Color(254, 254, 254));
@@ -120,16 +119,7 @@ public Image Logo(){
         txtCorreo.setLabelText("Confirmacion de contraseña");
         txtCorreo.setLineColor(new java.awt.Color(254, 254, 254));
         txtCorreo.setSelectionColor(new java.awt.Color(58, 50, 75));
-        panelRound1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 490, 310, 70));
-
-        txtNombre.setBackground(new java.awt.Color(42, 36, 56));
-        txtNombre.setForeground(new java.awt.Color(254, 254, 254));
-        txtNombre.setCaretColor(new java.awt.Color(254, 254, 254));
-        txtNombre.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
-        txtNombre.setLabelText("Contraseña actual");
-        txtNombre.setLineColor(new java.awt.Color(254, 254, 254));
-        txtNombre.setSelectionColor(new java.awt.Color(58, 50, 75));
-        panelRound1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 310, 310, 70));
+        panelRound1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 430, 310, 70));
 
         lblText.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos_Proyecto/RestableceContraText.png"))); // NOI18N
         panelRound1.add(lblText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
@@ -144,7 +134,7 @@ public Image Logo(){
                 btnRestablecerActionPerformed(evt);
             }
         });
-        panelRound1.add(btnRestablecer, new org.netbeans.lib.awtextra.AbsoluteConstraints(869, 610, 310, -1));
+        panelRound1.add(btnRestablecer, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 570, 310, -1));
 
         getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -224,6 +214,5 @@ public Image Logo(){
     private Controles_Personalizados.Paneles.PanelRound panelRound2;
     private Controles_Personalizados.textfields.TextField txtApellido;
     private Controles_Personalizados.textfields.TextField txtCorreo;
-    private Controles_Personalizados.textfields.TextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
