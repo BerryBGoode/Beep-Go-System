@@ -28,156 +28,209 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import necesario.RSFileChooser;
 
 /**
  *
  * @author danlo
  */
 public class FrmP_U_Personal extends javax.swing.JFrame {
-    DefaultComboBoxModel<String>modelocombo=new DefaultComboBoxModel<>();
-    DefaultComboBoxModel<String>modelcombogenero=new DefaultComboBoxModel<>();
-   private int tipod=0;
-   private int genero=0;
-   private List myArrayList;
-   private String fecha;
-   private SimpleDateFormat formatos;
-   private List ListGenero;
-    ControllerP_U_Personal controllerp=new ControllerP_U_Personal();
-    ControllerP_U_Usuarios controlleru=new ControllerP_U_Usuarios();
-    byte [] fotou;
+
+    DefaultComboBoxModel<String> modelocombo = new DefaultComboBoxModel<>();
+    DefaultComboBoxModel<String> modelcombogenero = new DefaultComboBoxModel<>();
+    private int tipod = 0;
+    private int genero = 0;
+    private List myArrayList;
+    private String fecha;
+    private SimpleDateFormat formatos;
+    private List ListGenero;
+    ControllerP_U_Personal controllerp = new ControllerP_U_Personal();
+    ControllerP_U_Usuarios controlleru = new ControllerP_U_Usuarios();
+    byte[] fotou;
     ImageIcon fotoicon;
-    
-    
+
     /**
      * Creates new form PrimerUsoPersonal
      */
     public FrmP_U_Personal() {
         initComponents();
-        this.setLocationRelativeTo(null); 
-         Shape forma= new RoundRectangle2D.Double(0,0, this.getBounds() .width, this.getBounds() .height,40,40);
-         AWTUtilities. setWindowShape(this, forma);
-         setIconImage(Logo());
-         System.out.println("Hola");
-         cargarlista();
-         
-    }
-public Image Logo(){
-    Image retvalue=Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
-    return retvalue;
-}
-void ExaminarImagen(){
-    JFileChooser jcargarfoto=new JFileChooser();
-    FileNameExtensionFilter extension=new FileNameExtensionFilter("JPG", "PNG", "JPG");
-    jcargarfoto.setFileFilter(extension);
-    int ver=jcargarfoto.showOpenDialog(this);
-    if (ver== JFileChooser.APPROVE_OPTION) {
-        String url=jcargarfoto.getSelectedFile().getAbsolutePath();
-        try {
-            File ruta=new File(url);
-            fotou=new byte[(int) ruta.length()];
-            InputStream input= new FileInputStream(ruta);
-            input.read(fotou);
-            controllerp.setLogo(fotou);
-        } catch (Exception e) {
-            controllerp.setLogo(fotou);
-        }
-        try {
-            byte[]imagen=controllerp.getLogo();
-            BufferedImage image=null;
-            InputStream input=new ByteArrayInputStream(imagen);
-            image=ImageIO.read(input);
-            fotoicon=new ImageIcon(image.getScaledInstance(220, 250, 0));
-            LblFoto.setIcon(fotoicon);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
-    }
-            
-}
-void IngresarRegistros(){
-        if (CmbTipoDocumento.getSelectedItem()==""||CmbGenero.getSelectedItem()=="") {
-        JOptionPane.showMessageDialog(null, "Escoja una opcion");
-    }
-    else if(txtNombre.getText().trim().isEmpty()||txtApellido.getText().trim().isEmpty()||txtCorreo.getText().trim().isEmpty()||txtDirecion.getText().trim().isEmpty()||txtDocumento.getText().trim().isEmpty()||TxtUsuario.getText().trim().isEmpty()||DtFechanac.getFechaSeleccionada().isEmpty()){
-        JOptionPane.showMessageDialog(null, "No se permiten campos vacios");
-    }else{
-        IngresarUsuario();
-        InsercionPPersonal();
-            if (controllerp.IngresarPPersonalController()==true&&controlleru.IngresarPUsuarioController()==true) {
-                JOptionPane.showMessageDialog(null, "Su registro ha sido ingresado correctamente","Proceso Completado",JOptionPane.INFORMATION_MESSAGE);
-                FrmLogin iniciarSesion =new FrmLogin();
-                iniciarSesion.setVisible(true);
-                this.dispose();
-            }
-    }
-}
-void IngresarUsuario(){
-    String clave=TxtUsuario.getText()+"123";
-    controlleru.setUsuario(TxtUsuario.getText());
-    controlleru.setClave(ValidacionesBeep_Go.EncriptarContra(clave));
-    controlleru.setFoto(fotou);
-}
-void InsercionPPersonal(){
-   
+        this.setLocationRelativeTo(null);
+        Shape forma = new RoundRectangle2D.Double(0, 0, this.getBounds().width, this.getBounds().height, 40, 40);
+        AWTUtilities.setWindowShape(this, forma);
+        setIconImage(Logo());
+        cargarlista();
+        validarpusuario();
 
-        controllerp.nombre=txtNombre.getText();
-        controllerp.apellido=txtApellido.getText();
-        controllerp.correo=txtCorreo.getText();
-        controllerp.direccion=txtDirecion.getText();
-        controllerp.dui=txtDocumento.getText();
-        controllerp.idtipoDocumento=tipod;
-        controllerp.idgenero=genero;
-        controllerp.fechanac=DtFechanac.getFechaSeleccionada();       
-   
-}
-void cargarlista(){
-    CargarTipoDocumento();
-    CargarGeneroPersonal();
-}
-final void CargarGeneroPersonal(){
-    ListGenero=new ArrayList();
-    try {
-        ResultSet rs=controllerp.cargarGeneroController();
-        if (rs.next()) {
-            modelcombogenero.addElement("");
-            do{
-            ListGenero.add(rs.getInt("idGenero"));
-            modelcombogenero.addElement(rs.getString("genero"));
-            CmbGenero.setModel(modelcombogenero);
-            }while(rs.next());
-        }
-        else{
-            System.out.println("No existen campos");
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "No se logro cargar la informacion","Error al cargar",JOptionPane.ERROR_MESSAGE);
     }
-}
-final void CargarTipoDocumento(){
-    myArrayList=new ArrayList();
-    try {
-         ResultSet rs=controllerp.cargarTipoDocumentoController();
-         if (rs.next()) {
-             modelocombo.addElement("");
-            do{
-            myArrayList.add(rs.getInt("idTipoDocumento"));
-            modelocombo.addElement(rs.getString("tipo_documento"));
-            CmbTipoDocumento.setModel(modelocombo);
-            }while(rs.next());
-        }else{
-             System.out.println("No existen campos");
-         }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "No se lograron cargar los datos","Error al cargar",JOptionPane.ERROR_MESSAGE);
+
+    public Image Logo() {
+        Image retvalue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Recursos_Proyecto/B&G Morado 2.png"));
+        return retvalue;
     }
-}
+
+    void validarpusuario() {
+        if (controlleru.checkControllerUsuario() == false && controllerp.checkcontrollerPersonal() == true) {
+            txtApellido.setEnabled(false);
+            txtCorreo.setEnabled(false);
+            txtNombre.setEnabled(false);
+            txtDirecion.setEnabled(false);
+            txtDocumento.setEnabled(false);
+            DtFechanac.setEnabled(false);
+            CmbGenero.setEnabled(false);
+            CmbTipoDocumento.setEnabled(false);
+            TxtUsuario.setEnabled(true);
+            BtnExaminar.setEnabled(true);
+            btnContinuar.setEnabled(true);
+        }
+    }
+
+    void ExaminarImagen() {
+        RSFileChooser jcargarfoto = new RSFileChooser();
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("jpeg", "jpg", "png", "gif");
+        jcargarfoto.setFileFilter(extension);
+        int ver = jcargarfoto.showOpenDialog(this);
+        if (ver == JFileChooser.APPROVE_OPTION) {
+            String url = jcargarfoto.getSelectedFile().getAbsolutePath();
+            try {
+                File ruta = new File(url);
+                fotou = new byte[(int) ruta.length()];
+                InputStream input = new FileInputStream(ruta);
+                input.read(fotou);
+                controllerp.setLogo(fotou);
+            } catch (Exception e) {
+                controllerp.setLogo(fotou);
+            }
+            try {
+                byte[] imagen = controllerp.getLogo();
+                BufferedImage image = null;
+                InputStream input = new ByteArrayInputStream(imagen);
+                image = ImageIO.read(input);
+                fotoicon = new ImageIcon(image.getScaledInstance(220, 250, 0));
+                LblFoto.setIcon(fotoicon);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+
+    }
+
+    void IngresarRegistros() {
+        if (controllerp.checkcontrollerPersonal() == false & controlleru.checkControllerUsuario() == false) {
+            IngresarUsuario();
+            InsercionPPersonal();
+            FrmLogin iniciarSesion = new FrmLogin();
+            iniciarSesion.setVisible(true);
+            this.dispose();
+        } else if (controlleru.checkControllerUsuario() == false) {
+            IngresarUsuario();
+            FrmLogin iniciarSesion = new FrmLogin();
+            iniciarSesion.setVisible(true);
+            this.dispose();
+        }
+    }
+
+    void IngresarUsuario() {
+        if (TxtUsuario.getText().trim().isEmpty() || LblFoto.getIcon() == null) {
+            JOptionPane.showMessageDialog(null, "Ingresar los respectivos campos");
+        } else {
+            BtnExaminar.setEnabled(true);
+            TxtUsuario.setEnabled(true);
+            txtApellido.setEnabled(false);
+            txtCorreo.setEnabled(false);
+            txtNombre.setEnabled(false);
+            txtDirecion.setEnabled(false);
+            txtDocumento.setEnabled(false);
+            DtFechanac.setEnabled(false);
+            CmbGenero.setEnabled(false);
+            CmbTipoDocumento.setEnabled(false);
+            String clave = TxtUsuario.getText() + "123";
+            controlleru.setUsuario(TxtUsuario.getText());
+            controlleru.setClave(ValidacionesBeep_Go.EncriptarContra(clave));
+            controlleru.setFoto(fotou);
+            if (controlleru.IngresarPUsuarioController() == true) {
+                JOptionPane.showMessageDialog(null, "Su usuario ha sido ingresado correctamente", "Proceso Completado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+    }
+
+    void InsercionPPersonal() {
+        BtnExaminar.setEnabled(false);
+        TxtUsuario.setEnabled(false);
+        if (CmbTipoDocumento.getSelectedItem() == "" || CmbGenero.getSelectedItem() == "") {
+            JOptionPane.showMessageDialog(null, "Escoja una opcion");
+        } else if (txtNombre.getText().trim().isEmpty() || txtApellido.getText().trim().isEmpty() || txtCorreo.getText().trim().isEmpty() || txtDirecion.getText().trim().isEmpty() || txtDocumento.getText().trim().isEmpty() || DtFechanac.getFechaSeleccionada().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se permiten campos vacios");
+        } else {
+            controllerp.nombre = txtNombre.getText();
+            controllerp.apellido = txtApellido.getText();
+            controllerp.correo = txtCorreo.getText();
+            controllerp.direccion = txtDirecion.getText();
+            controllerp.dui = txtDocumento.getText();
+            controllerp.idtipoDocumento = tipod;
+            controllerp.idgenero = genero;
+            controllerp.fechanac = DtFechanac.getFechaSeleccionada();
+            if (controllerp.IngresarPPersonalController() == true) {
+                JOptionPane.showMessageDialog(null, "Su registro ha sido ingresado correctamente", "Proceso Completado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+    }
+
+    void cargarlista() {
+        CargarTipoDocumento();
+        CargarGeneroPersonal();
+    }
+
+    final void CargarGeneroPersonal() {
+        ListGenero = new ArrayList();
+        try {
+            ResultSet rs = controllerp.cargarGeneroController();
+            if (rs.next()) {
+                modelcombogenero.addElement("");
+                do {
+                    ListGenero.add(rs.getInt("idGenero"));
+                    modelcombogenero.addElement(rs.getString("genero"));
+                    CmbGenero.setModel(modelcombogenero);
+                } while (rs.next());
+            } else {
+                System.out.println("No existen campos");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se logro cargar la informacion", "Error al cargar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    final void CargarTipoDocumento() {
+        myArrayList = new ArrayList();
+        try {
+            ResultSet rs = controllerp.cargarTipoDocumentoController();
+            if (rs.next()) {
+                modelocombo.addElement("");
+                do {
+                    myArrayList.add(rs.getInt("idTipoDocumento"));
+                    modelocombo.addElement(rs.getString("tipo_documento"));
+                    CmbTipoDocumento.setModel(modelocombo);
+                } while (rs.next());
+            } else {
+                System.out.println("No existen campos");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se lograron cargar los datos", "Error al cargar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -400,15 +453,15 @@ final void CargarTipoDocumento(){
 
     private void CmbTipoDocumentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbTipoDocumentoItemStateChanged
         // TODO add your handling code here:º
-        if (evt.getStateChange()==ItemEvent.SELECTED) {
-            int pos=CmbTipoDocumento.getSelectedIndex();
-            if (pos==0) {
-                tipod=0;
-            }else{
-                int dim=myArrayList.size();
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            int pos = CmbTipoDocumento.getSelectedIndex();
+            if (pos == 0) {
+                tipod = 0;
+            } else {
+                int dim = myArrayList.size();
                 for (int i = 0; i < dim; i++) {
-                    if (i==pos-1) {
-                        tipod=(int) myArrayList.get(i);
+                    if (i == pos - 1) {
+                        tipod = (int) myArrayList.get(i);
                     }
                 }
             }
@@ -417,15 +470,15 @@ final void CargarTipoDocumento(){
 
     private void CmbGeneroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbGeneroItemStateChanged
         // TODO add your handling code here:
-        if (evt.getStateChange()==ItemEvent.SELECTED) {
-            int pos=CmbGenero.getSelectedIndex();
-            if (pos==0) {
-                genero=0;
-            }else{
-                int dimgenero=ListGenero.size();
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            int pos = CmbGenero.getSelectedIndex();
+            if (pos == 0) {
+                genero = 0;
+            } else {
+                int dimgenero = ListGenero.size();
                 for (int i = 0; i < dimgenero; i++) {
-                    if (i==pos-1) {
-                        genero=(int)ListGenero.get(i);
+                    if (i == pos - 1) {
+                        genero = (int) ListGenero.get(i);
                     }
                 }
             }
@@ -439,7 +492,7 @@ final void CargarTipoDocumento(){
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         // TODO add your handling code here:
         IngresarRegistros();
-        
+
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void BtnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExaminarActionPerformed
@@ -478,7 +531,18 @@ final void CargarTipoDocumento(){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmP_U_Personal().setVisible(true);
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    new FrmP_U_Personal().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrmP_U_Personal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(FrmP_U_Personal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(FrmP_U_Personal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(FrmP_U_Personal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

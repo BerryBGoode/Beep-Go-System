@@ -35,10 +35,9 @@ public class ModelP_U_Usuarios {
         int PIN=0;
         int idtipousuario=1;
         int idestadousuario=1;
-        int idempresa=1;
         try {
             con=ModelConexion.getConnection();
-            String querys="INSERT INTO tbUsuarios VALUES (?,?,?,?,?,?,?,? )";
+            String querys="INSERT INTO tbUsuarios VALUES (?,?,?,?,?,?,?)";
             ps=con.prepareStatement(querys);
             ps.setInt(1, idpersonal);
             ps.setString(2, Usuario);
@@ -46,8 +45,7 @@ public class ModelP_U_Usuarios {
             ps.setInt(4,PIN);
             ps.setInt(5, idtipousuario);
             ps.setInt(6, idestadousuario);
-            ps.setInt(7, idempresa);
-            ps.setBytes(8, perfil);
+            ps.setBytes(7, perfil);
             ps.execute();
             return true;
         } catch (SQLException e) {

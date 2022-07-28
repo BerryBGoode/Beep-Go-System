@@ -190,16 +190,9 @@ public class FrmConfigConection extends javax.swing.JFrame {
                 }else if(verficarpu.checkEnterprise()==true&&verficarpu1.checkcontrollerPersonal()==false){
                     FrmP_U_Personal cargarpersonal=new FrmP_U_Personal();
                     cargarpersonal.setVisible(true);
-                }
-                
-                ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
-                boolean primeraempresa=VistapEmpresa.IngresarP_EmpresaController();
-                
-                if (primeraempresa == false) {
-                    FrmP_U_Empresa enter = new FrmP_U_Empresa();
-                    enter.setVisible(true);
+
                 }else {
-                    if (primeraempresa == true) {
+                    if (verficarpu.checkEnterprise() == true&&verficarpu1.checkcontrollerPersonal()==true&&verficarpu2.checkControllerUsuario()==true) {
                         //verficar primer usuario
                         login.setVisible(true);
                     }
@@ -236,7 +229,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
         }
     }
 
-    void createFile() {
+    void createFile() {//Crea el archivo
         file = new File(filename);
         try {
             file.createNewFile();
@@ -346,7 +339,7 @@ public class FrmConfigConection extends javax.swing.JFrame {
                     
                     ControllerP_U_Empresa VistapEmpresa = new ControllerP_U_Empresa();
                     ControllerP_U_Personal PrimerPersonal = new ControllerP_U_Personal();
-                    ControllerP_U_Usuarios primerUsuarios=new ControllerP_U_Usuarios();
+                    ControllerP_U_Usuarios primerUser=new ControllerP_U_Usuarios();
                     
                     //lee los valores y los asigna a los attr
                     if (VistapEmpresa.checkEnterprise() == false) {
@@ -374,9 +367,12 @@ public class FrmConfigConection extends javax.swing.JFrame {
                             cargarpersonal.setVisible(true);
                 
                     }
-                    else if (PrimerPersonal.checkcontrollerPersonal()==true&&primerUsuarios.checkControllerUsuario()==true&&VistapEmpresa.checkEnterprise()==true) {
-                        FrmLogin iniciar=new FrmLogin();
-                        iniciar.setVisible(true);
+                    else if (primerUser.checkControllerUsuario()==false&&VistapEmpresa.checkEnterprise()==true&&PrimerPersonal.checkcontrollerPersonal()==true) {
+                        FrmP_U_Personal cargarpwuser=new FrmP_U_Personal();
+                        cargarpwuser.setVisible(true);
+                    }
+                    else if (primerUser.checkControllerUsuario()==true&&VistapEmpresa.checkEnterprise()==true&&PrimerPersonal.checkcontrollerPersonal()==true) {
+                        login.setVisible(true);
                     }
                     /*else if(primerPersonal==true){
                             FrmP_U_Usuario pu=new FrmP_U_Usuario();

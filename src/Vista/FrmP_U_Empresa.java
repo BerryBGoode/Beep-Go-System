@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import necesario.RSFileChooser;
 
 /**
  *
@@ -223,7 +224,7 @@ public class FrmP_U_Empresa extends javax.swing.JFrame {
         //Que guapos somos
     }//GEN-LAST:event_btnMinimizarMouseClicked
     void cargarImagen() {
-        JFileChooser jcargar = new JFileChooser();
+        RSFileChooser jcargar = new RSFileChooser();
         FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG", "PNG", "JPG");
         jcargar.setFileFilter(fil);
         int s = jcargar.showOpenDialog(this);
