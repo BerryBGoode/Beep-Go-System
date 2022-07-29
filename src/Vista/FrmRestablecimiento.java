@@ -191,7 +191,7 @@ public Image Logo(){
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmRestablecimiento dialog = new FrmRestablecimiento(new javax.swing.JFrame(), true);
+                FrmRestablecimiento dialog = new FrmRestablecimiento();
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

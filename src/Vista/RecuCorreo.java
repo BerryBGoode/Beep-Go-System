@@ -148,7 +148,7 @@ public Image Logo(){
 
     private void btnRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestablecerActionPerformed
         // TODO add your handling code here:
-        FrmRestablecimiento fr = new FrmRestablecimiento(new javax.swing.JFrame(),true);
+        FrmRestablecimiento fr = new FrmRestablecimiento();
         fr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRestablecerActionPerformed
